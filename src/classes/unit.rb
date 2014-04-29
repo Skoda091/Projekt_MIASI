@@ -1,5 +1,5 @@
 require 'gosu'
-
+load '../src/classes/object.rb'
 
 class Unit < Object
   def initialize(x,y,window,player_id,type)
@@ -20,7 +20,7 @@ class Unit < Object
   end
 
   def move()
-    if orientation(player_id)==false
+    if orientation(@player_id)==false
       @x+=@speed
     else
       @x-=@speed
@@ -33,9 +33,9 @@ class Unit < Object
 
   def init(type)
     case type
-      when "swordsman" then @hp=100, @cost=100,@speed=5, @image=Gosu::Image.new(window, "../data/graphics/Units/swordsman.gif",orientation(player_id))
-      when "pikeman" then @hp=100, @cost=100, @image=Gosu::Image.new(window, "../data/graphics/Units/pikeman.gif",orientation(player_id))
-      when "horseman" then @hp=100, @cost=100, @image=Gosu::Image.new(window, "../data/graphics/Units/horseman.gif",orientation(player_id))
+      when "swordsman" then @hp=100, @cost=100,@speed=5, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/swordsman.gif",orientation(@player_id))
+      when "pikeman" then @hp=100, @cost=100, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/pikeman.gif",orientation(@player_id))
+      when "horseman" then @hp=100, @cost=100, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/horseman.gif",orientation(@player_id))
     end
 
   end
