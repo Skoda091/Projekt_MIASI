@@ -20,17 +20,21 @@ class GameWindow < Gosu::Window
     if button_down? Gosu::KbEscape  then
       close
     end
-    if rand(100)<10
-      end
+    if rand(100)<10 then
+      @units.push(Unit.new(0,800,self,"left","swordsman"))
+    end
 
+    if !@units.empty? then
+    @units.each { |unit| unit.move}
+      end
+  
   end
 
   def draw
     @background_image.draw(0, 0, 0)
-    @u.draw()
-    @t.draw()
+    @units.each { |unit| unit.draw}
   end
-end
+
 
 def button_down(id)
   if id == Gosu::KbEscape
