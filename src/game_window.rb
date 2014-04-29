@@ -20,10 +20,18 @@ class GameWindow < Gosu::Window
       close
     end
 
-
-
+    unit_type=rand(3)
+    unit_types=""
+    case unit_type
+      when 0
+        unit_types="swordsman"
+      when 1
+        unit_types="pikeman"
+      when 2
+        unit_types="horseman"
+    end
     if rand(100)<5 then
-      @units.push(Unit.new(0,800,self,"left","swordsman"))
+      @units.push(Unit.new(0,800,self,"left",unit_types))
 
     end
 
