@@ -33,9 +33,9 @@ class Unit < Object
 
   def init(type)
     case type
-      when "swordsman" then @hp=100, @cost=100,@speed=5, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/swordsman.gif",orientation(@player_id))
-      when "pikeman" then @hp=100, @cost=100,@speed=2, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/pikeman.gif",orientation(@player_id))
-      when "horseman" then @hp=100, @cost=100,@speed=8, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/horseman.gif",orientation(@player_id))
+      when "swordsman" then @hp=100, @cost=100,@speed=2, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/swordsman.gif",orientation(@player_id))
+      when "pikeman" then @hp=100, @cost=100,@speed=1, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/pikeman.gif",orientation(@player_id))
+      when "horseman" then @hp=100, @cost=100,@speed=3, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/horseman.gif",orientation(@player_id))
     end
 
   end
