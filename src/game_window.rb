@@ -9,9 +9,8 @@ class GameWindow < Gosu::Window
     super 1600, 900, true
     self.caption = "Gosu Tutorial Game1"
     @background_image = Gosu::Image.new(self, "../data/graphics/archer.jpg", true)
-
-    @units=Array.new
-
+    #@units=Array.new
+    @count=0
 
     end
   end
@@ -20,19 +19,29 @@ class GameWindow < Gosu::Window
     if button_down? Gosu::KbEscape  then
       close
     end
-    if rand(100)<10 then
+
+=begin
+
+    if @count>500 then
       @units.push(Unit.new(0,800,self,"left","swordsman"))
+      @count=0
+    else
+      @count+=1
     end
 
-    if !@units.empty? then
-    @units.each { |unit| unit.move}
+    unless @units.empty?
+    @units.each { |u| u.move}
       end
-  
+=end
   end
 
   def draw
     @background_image.draw(0, 0, 0)
-    @units.each { |unit| unit.draw}
+=begin
+    unless @units.empty?
+      @units.each { |u| u.draw}
+    end
+=end
   end
 
 
