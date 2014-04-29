@@ -1,3 +1,4 @@
+require 'gosu'
 
 class Object
   def initialize (x,y,window,player_id)
