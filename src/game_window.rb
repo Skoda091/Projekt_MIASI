@@ -9,20 +9,26 @@ class GameWindow < Gosu::Window
     super 1600, 900, true
     self.caption = "Gosu Tutorial Game1"
     @background_image = Gosu::Image.new(self, "../data/graphics/archer.jpg", true)
-    @u=Unit.new(0,800,self,"left","swordsman")
 
+    @units=Array.new
+
+
+    end
   end
 
   def update
     if button_down? Gosu::KbEscape  then
       close
     end
-    @u.move()
+    if rand(100)<10
+      end
+
   end
 
   def draw
     @background_image.draw(0, 0, 0)
     @u.draw()
+    @t.draw()
   end
 end
 
