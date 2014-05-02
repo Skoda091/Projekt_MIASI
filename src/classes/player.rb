@@ -7,7 +7,7 @@ class Player
   def initialize (window,orientation,engine)
     @game_window=window
     @orientation=orientation
-
+    @engine=engine
     @walls=Array.new
 
 

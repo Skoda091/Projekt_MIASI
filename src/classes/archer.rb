@@ -4,20 +4,26 @@ require_relative '../classes/projectile.rb'
 
 class Archer < Object
   attr_accessor :angle
-
   def initialize (x,y,window,player_id)
     super(x,y,window,player_id)
+
+
     @image=Gosu::Image.new(@game_window, "../data/graphics/Units/archer.gif")
+    @animation = Gosu::Image::load_tiles(@game_window, "../data/graphics/Units/archer_anim.png", 25, 25, false)
     @cursor=Gosu::Image.new(@game_window, "../data/graphics/cursor.png")
+    @bow_shot_sound = Gosu::Sample.new(@game_window, "../data/sounds/cbow_04.wav")
+
+
     @arrows=Array.new
     @angle=0.0
     @cooldown=100.0
     @cooldown_decay=0.95
+
   end
 
   def draw
       @image.draw_rot(@x, @y, 1, 0)
-      @cursor.draw_rot(@x+30, @y-30, 1, @angle,0.5,2)
+      @cursor.draw_rot(@x, @y, 1, @angle,0.5,3)
       @arrows.each {|x| x.draw}
   end
 
@@ -35,6 +41,7 @@ class Archer < Object
     ar.warp(angle+180)
     @arrows.push(ar)
     @cooldown+=500
+    @bow_shot_sound.play
     end
   end
 
@@ -42,5 +49,7 @@ class Archer < Object
     @arrows.reject! {|x| x.move}
     @cooldown*=@cooldown_decay
   end
+
+
 
   end
