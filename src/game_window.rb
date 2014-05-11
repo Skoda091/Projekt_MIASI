@@ -5,19 +5,17 @@ load '../src/classes/unit.rb'
 
 class GameWindow < Gosu::Window
   def initialize
-<<<<<<< HEAD
-    super 800, 600, false
-    self.caption = "Gosu Tutorial Game"
-=======
+
     @z=0
-    super 1600, 900, true
+    super 1600, 900, false
     self.caption = "Gosu Tutorial Game1"
->>>>>>> ca9abf82c205124c8c08446488ebd16d91a5623c
     @background_image = Gosu::Image.new(self, "../data/graphics/archer.jpg", true)
-    @units=Array.new
+    @units1=Array.new
+    @units2=Array.new
 
 
-    end
+
+  end
 
 
   def update
@@ -36,21 +34,29 @@ class GameWindow < Gosu::Window
         unit_types="horseman"
     end
     if rand(100)<5 then
-      @units.push(Unit.new(0,800,self,"left",unit_types))
+      @units1.push(Unit.new(0,800,self,"left",unit_types))
+      @units2.push(Unit.new(1600,800,self,"right",unit_types))
+
 
     end
 
-    unless @units.empty?
-    @units.each { |u| u.move}
-      end
+    unless @units1.empty?
+    @units1.each { |u| u.move}
+    end
+    unless @units2.empty?
+      @units2.each { |u| u.move}
+    end
 
   end
 
   def draw
     @background_image.draw(0, 0, 0)
 
-    unless @units.empty?
-      @units.each { |u| u.draw}
+    unless @units1.empty?
+      @units1.each { |u| u.draw}
+    end
+    unless @units2.empty?
+      @units2.each { |u| u.draw}
     end
 
   end
