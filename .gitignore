@@ -5,4 +5,4 @@ fakeroot
 *.swp
 crate_boot.h
 .bundle
-.idea
+.idea/

@@ -1,9 +1,11 @@
 source "https://rubygems.org"
 # uncomment for chipmunk
 # gem 'chipmunk'
+ruby '1.9.2'
 gem 'require_all'
-gem "gamebox", '~> 0.5.0'
+gem "gosu"
 gem "conject"
 gem "rspec"
 gem "releasy"
 gem "rake"
+gem "texplay"
