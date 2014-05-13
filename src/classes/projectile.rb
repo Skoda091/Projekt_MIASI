@@ -1,4 +1,5 @@
 require 'gosu'
+
 require_relative '../classes/object.rb'
 require_relative '../classes/engine.rb'
 
@@ -14,7 +15,7 @@ class Projectile < Object
   end
 def warp (angle)
   @base_angle=-angle
-  @vel=14.0
+  @vel=20
   @vel_x,@vel_y=Gosu::offset_x(@base_angle,@vel),Gosu::offset_y(@base_angle,@vel)
   @g=0.18
   @ttl=1000

@@ -8,8 +8,10 @@ class Archer < Object
     super(x,y,window,player_id)
 
 
-    @image=Gosu::Image.new(@game_window, "../data/graphics/Units/archer.gif")
-    @animation = Gosu::Image::load_tiles(@game_window, "../data/graphics/Units/archer_anim.png", 25, 25, false)
+    @image=Gosu::Image.new(@game_window, "../data/graphics/Units/Archer/Shoot/Angle/0.png")
+    @arm=Gosu::Image.new(@game_window, "../data/graphics/Units/Archer/Shoot/Angle/arm.png")
+    
+    #@reload = load_sprites("../data/graphics/Units/Archer/Reload")
     @cursor=Gosu::Image.new(@game_window, "../data/graphics/cursor.png")
     @bow_shot_sound = Gosu::Sample.new(@game_window, "../data/sounds/cbow_04.wav")
 
@@ -22,7 +24,8 @@ class Archer < Object
   end
 
   def draw
-      @image.draw_rot(@x, @y, 1, 0)
+      #@image = @animation[Gosu::milliseconds / 100 % @animation.size];
+      @image.draw_rot(@x, @y, 1, 0,0.5,0.5, orientation )
       @cursor.draw_rot(@x, @y, 1, @angle,0.5,3)
       @arrows.each {|x| x.draw}
   end
@@ -40,7 +43,7 @@ class Archer < Object
     ar=Projectile.new(self.x,self.y,self.game_window,self.player_id )
     ar.warp(angle+180)
     @arrows.push(ar)
-    @cooldown+=500
+    @cooldown+=10
     @bow_shot_sound.play
     end
   end
