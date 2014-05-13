@@ -17,8 +17,7 @@ class GameWindow < Gosu::Window
     self.caption = "Gladius"
     @background_sky = Gosu::Image.new(self, "../data/graphics/Background/sky.png", false)
     @background_ground = Gosu::Image.new(self, "../data/graphics/Background/grass1.jpg", false)
-    @units1=Array.new
-    @units2=Array.new
+    
     @engin=Engine.new(self)
     @left=Player.new(self,"left",@engin)
     @right=Player.new(self,"right",@engin)
@@ -26,33 +25,17 @@ class GameWindow < Gosu::Window
 
   def update
 
-
-    unit_type=rand(3)
-    unit_types=""
-    case unit_type
-      when 0
-        unit_types="swordsman"
-      when 1
-        unit_types="pikeman"
-      when 2
-        unit_types="horseman"
-    end
-    if rand(200)<2 then
-      @units1.push(Unit.new(0,@res_y-100,self,"left",unit_types))
-      @units2.push(Unit.new(1600,@res_y-100,self,"right",unit_types))
-    end
-
     self.button_action
     @left.walls.each { |x| x.bow.arrows_fly}
+    @left.units.each {|u| u.move}
+    @right.units.each {|u| u.move}
+    @right.walls.each { |x| x.bow.arrows_fly}
+    
+<<<<<<< HEAD
 
-    unless @units1.empty?
-    @units1.each { |u| u.move}
-    end
 
-    unless @units2.empty?
-      @units2.each { |u| u.move}
-    end
-
+=======
+>>>>>>> af5184031ef07bfd1346d5ea65989143e86807eb
   end
 
   def draw
@@ -62,16 +45,6 @@ class GameWindow < Gosu::Window
 
     @left.draw
     @right.draw
-
-    unless @units1.empty?
-      @units1.each { |u| u.draw}
-    end
-
-    unless @units2.empty?
-      @units2.each { |u| u.draw}
-    end
-
-
 
   end
 
@@ -92,6 +65,29 @@ def button_action
   if button_down? Gosu::KbSpace then
     @left.walls.each { |x| x.bow.shoot}
   end
+  # Rekrutacja jednostek
+  if button_down? Gosu::Kb1 then
+    @left.units.push(Unit.new(0,@res_y-100,self,"left","pikeman"))
+  end
+  if button_down? Gosu::Kb0 then
+    @right.units.push(Unit.new(@res_x,@res_y-100,self,"right","pikeman"))
+  end
+  if button_down? Gosu::Kb2 then
+    @left.units.push(Unit.new(0,@res_y-100,self,"left","swordsman"))
+  end
+  if button_down? Gosu::Kb9 then
+    @right.units.push(Unit.new(@res_x,@res_y-100,self,"right","swordsman"))
+  end
+  if button_down? Gosu::Kb3 then
+    @left.units.push(Unit.new(0,@res_y-100,self,"left","horseman"))
+  end
+  if button_down? Gosu::Kb8 then
+    @right.units.push(Unit.new(@res_x,@res_y-100,self,"right","horseman"))
+<<<<<<< HEAD
+    end
+=======
+  end
+>>>>>>> af5184031ef07bfd1346d5ea65989143e86807eb
   if button_down? Gosu::KbLeft  then
     @right.walls.each { |x| x.bow.angle_change(false)}
   end
