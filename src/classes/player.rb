@@ -3,12 +3,13 @@ require_relative '../classes/archer.rb'
 require_relative '../classes/building.rb'
 
 class Player
-  attr_accessor :walls
+  attr_accessor :walls, :units
   def initialize (window,orientation,engine)
     @game_window=window
     @orientation=orientation
     @engine=engine
     @walls=Array.new
+    @units=Array.new
 
 
     if @orientation=="left"
@@ -33,7 +34,14 @@ class Player
 
   def draw
     @walls.each { |x| x.draw}
+    unless @units.empty?
+      @units.each { |u| u.draw}
+    end
 
+  end
+
+  def cooldown
+    
   end
 
 end
