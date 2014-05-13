@@ -14,7 +14,7 @@ class Archer < Object
     #@reload = load_sprites("../data/graphics/Units/Archer/Reload")
     @cursor=Gosu::Image.new(@game_window, "../data/graphics/cursor.png")
     @bow_shot_sound = Gosu::Sample.new(@game_window, "../data/sounds/cbow_04.wav")
-
+    @reload_sound = Gosu::Sample.new(@game_window, "../data/sounds/cbowwind_01.wav")
 
     @arrows=Array.new
     @angle=0.0
@@ -26,28 +26,27 @@ class Archer < Object
   def draw
       #@image = @animation[Gosu::milliseconds / 100 % @animation.size];
       @image.draw_rot(@x, @y, 1, 0,0.5,0.5, orientation )
-      @cursor.draw_rot(@x-5, @y-15, 1, @angle,0.5,3)
+      #@cursor.draw_rot(@x-5, @y-15, 1, @angle,0.5,3)
       @arm.draw_rot(@x-5, @y-15, 1, @angle-90,0,0.5)
       @arrows.each {|x| x.draw}
   end
 
   def angle_change (direction)
-    if angle*3<180*3 then
       if direction==true
-      @angle+=3
+        @angle+=3 if @angle+3<160
       else
-      @angle-=3
+        @angle-=3 if @angle-3>20
       end
-    end
   end
 
   def shoot
     if @cooldown<50
-    ar=Projectile.new(self.x,self.y,self.game_window,self.player_id )
+    ar=Projectile.new(self.x+12,self.y-17,self.game_window,self.player_id )
     ar.warp(angle+180)
     @arrows.push(ar)
-    @cooldown+=10
+    @cooldown+=4000
     @bow_shot_sound.play
+    @reload_sound.play_pan(2,2,2)
     end
   end
 
