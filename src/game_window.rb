@@ -44,7 +44,8 @@ class GameWindow < Gosu::Window
 
     self.button_action
     @left.walls.each { |x| x.bow.arrows_fly}
-
+    @right.walls.each { |x| x.bow.arrows_fly}
+    
     unless @units1.empty?
     @units1.each { |u| u.move}
     end
@@ -83,14 +84,23 @@ def button_down(id)
 end
 
 def button_action
-  if button_down? Gosu::KbLeft or button_down? Gosu::GpLeft then
+  if button_down? Gosu::KbA  then
     @left.walls.each { |x| x.bow.angle_change(false)}
   end
-  if button_down? Gosu::KbRight or button_down? Gosu::GpRight then
+  if button_down? Gosu::KbD  then
     @left.walls.each { |x| x.bow.angle_change(true)}
   end
   if button_down? Gosu::KbSpace then
     @left.walls.each { |x| x.bow.shoot}
+  end
+  if button_down? Gosu::KbLeft  then
+    @right.walls.each { |x| x.bow.angle_change(false)}
+  end
+  if button_down? Gosu::KbRight  then
+    @right.walls.each { |x| x.bow.angle_change(true)}
+  end
+  if button_down? Gosu::KbEnter then
+    @right.walls.each { |x| x.bow.shoot}
   end
 end
 
