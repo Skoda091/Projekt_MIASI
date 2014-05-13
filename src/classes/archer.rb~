@@ -46,7 +46,7 @@ class Archer < Object
     @arrows.push(ar)
     @cooldown+=4000
     @bow_shot_sound.play
-    @reload_sound.play(1,2)
+    @reload_sound.play_pan(2,2,2)
     end
   end
 

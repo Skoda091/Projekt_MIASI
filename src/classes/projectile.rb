@@ -25,7 +25,7 @@ end
   def move
     @ttl-=2 #czas zycia pocisku
 
-    if @y>@game_window.engine.horizont_pos and @in_air then # czy pocisk w powietrzu
+    if @y>@game_window.engine.horizont_pos+40 and @in_air then # czy pocisk w powietrzu
       @in_air=false
       @arrow_hit_ground.play
     end
