@@ -1,5 +1,4 @@
 require 'gosu'
-
 load '../src/classes/unit.rb'
 
 
@@ -12,8 +11,6 @@ class GameWindow < Gosu::Window
     @background_image = Gosu::Image.new(self, "../data/graphics/archer.jpg", true)
     @units1=Array.new
     @units2=Array.new
-
-
 
   end
 
@@ -33,7 +30,9 @@ class GameWindow < Gosu::Window
       when 2
         unit_types="horseman"
     end
-    if rand(100)<5 then
+    if rand(200)<2 then
+
+
       @units1.push(Unit.new(0,800,self,"left",unit_types))
       @units2.push(Unit.new(1600,800,self,"right",unit_types))
 
@@ -43,9 +42,11 @@ class GameWindow < Gosu::Window
     unless @units1.empty?
     @units1.each { |u| u.move}
     end
+
     unless @units2.empty?
       @units2.each { |u| u.move}
     end
+
 
   end
 
@@ -55,9 +56,11 @@ class GameWindow < Gosu::Window
     unless @units1.empty?
       @units1.each { |u| u.draw}
     end
+
     unless @units2.empty?
       @units2.each { |u| u.draw}
     end
+
 
   end
 
