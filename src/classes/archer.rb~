@@ -32,7 +32,7 @@ class Archer < Object
   end
 
   def angle_change (direction)
-    if angle*3<180*3 then
+    if angle<180 then
       if direction==true
       @angle+=3
       else
