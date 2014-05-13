@@ -31,8 +31,11 @@ class GameWindow < Gosu::Window
     @right.units.each {|u| u.move}
     @right.walls.each { |x| x.bow.arrows_fly}
     
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> af5184031ef07bfd1346d5ea65989143e86807eb
   end
 
   def draw
@@ -80,6 +83,11 @@ def button_action
   end
   if button_down? Gosu::Kb8 then
     @right.units.push(Unit.new(@res_x,@res_y-100,self,"right","horseman"))
+<<<<<<< HEAD
+    end
+=======
+  end
+>>>>>>> af5184031ef07bfd1346d5ea65989143e86807eb
   if button_down? Gosu::KbLeft  then
     @right.walls.each { |x| x.bow.angle_change(false)}
   end
