@@ -38,8 +38,8 @@ class GameWindow < Gosu::Window
         unit_types="horseman"
     end
     if rand(200)<2 then
-      @units1.push(Unit.new(0,800,self,"left",unit_types))
-      @units2.push(Unit.new(1600,800,self,"right",unit_types))
+      @units1.push(Unit.new(0,@res_y-100,self,"left",unit_types))
+      @units2.push(Unit.new(1600,@res_y-100,self,"right",unit_types))
     end
 
     self.button_action

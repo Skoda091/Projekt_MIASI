@@ -25,11 +25,8 @@ class Unit < Object
 
   def draw()
 
-    if orientation(@player_id)==false
-      @image.draw_rot(@x, @y, 1, 0, 0.5, 0.5, 1, 1)
-    else
-      @image.draw_rot(@x, @y, 1, 0, 0.5, 0.5, -1, 1)
-    end
+    @image.draw_rot(@x, @y, 1, 0, 0.5, 0.5, orientation, 1)
+    
     #draw_rot(x, y, z, angle, center_x = 0.5, center_y = 0.5, factor_x = 1, factor_y = 1, color = 0xffffffff, mode = :default) 
 =begin
   
@@ -49,7 +46,7 @@ end
   end
 
   def move()
-    if orientation(@player_id)==false
+    if orientation==1
       @x+=@speed
     else
       @x-=@speed
@@ -64,9 +61,9 @@ end
 
     case type
 
-      when "swordsman" then @hp=100, @cost=100,@speed=1, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/swordsman.gif",orientation(@player_id))
-      when "pikeman" then @hp=100, @cost=100,@speed=0.5, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/pikeman.gif",orientation(@player_id))
-      when "horseman" then @hp=100, @cost=100,@speed=2, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/horseman.gif",orientation(@player_id))
+      when "swordsman" then @hp=100, @cost=100,@speed=1, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/swordsman.gif")
+      when "pikeman" then @hp=100, @cost=100,@speed=0.5, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/pikeman.gif")
+      when "horseman" then @hp=100, @cost=100,@speed=2, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/horseman.gif")
 
     end
 
