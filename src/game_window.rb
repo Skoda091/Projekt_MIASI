@@ -27,21 +27,10 @@ class GameWindow < Gosu::Window
 
     self.button_action
     @left.walls.each { |x| x.bow.arrows_fly}
-<<<<<<< HEAD
     @left.units.each {|u| u.move}
     @right.units.each {|u| u.move}
-=======
     @right.walls.each { |x| x.bow.arrows_fly}
     
-    unless @units1.empty?
-    @units1.each { |u| u.move}
-    end
-
-    unless @units2.empty?
-      @units2.each { |u| u.move}
-    end
->>>>>>> debcf8c008482b49455430b5bf4ef24083805885
-
   end
 
   def draw
@@ -71,7 +60,6 @@ def button_action
   if button_down? Gosu::KbSpace then
     @left.walls.each { |x| x.bow.shoot}
   end
-<<<<<<< HEAD
   # Rekrutacja jednostek
   if button_down? Gosu::Kb1 then
     @left.units.push(Unit.new(0,@res_y-100,self,"left","pikeman"))
@@ -90,7 +78,7 @@ def button_action
   end
   if button_down? Gosu::Kb8 then
     @right.units.push(Unit.new(@res_x,@res_y-100,self,"right","horseman"))
-=======
+  end
   if button_down? Gosu::KbLeft  then
     @right.walls.each { |x| x.bow.angle_change(false)}
   end
@@ -99,7 +87,6 @@ def button_action
   end
   if button_down? Gosu::KbEnter then
     @right.walls.each { |x| x.bow.shoot}
->>>>>>> debcf8c008482b49455430b5bf4ef24083805885
   end
 end
 
