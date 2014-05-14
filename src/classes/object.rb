@@ -8,10 +8,7 @@ class Object
     @player_id=player_id #left, right, neutral
     @image=nil
     
-
   end
-
-
 
   def orientation 
     if @player_id=="left"

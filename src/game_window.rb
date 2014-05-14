@@ -26,10 +26,13 @@ class GameWindow < Gosu::Window
   def update
 
     self.button_action
-    @left.walls.each { |x| x.bow.arrows_fly}
+    
     @left.units.each {|u| u.move}
     @right.units.each {|u| u.move}
+    @left.walls.each { |x| x.bow.arrows_fly}
     @right.walls.each { |x| x.bow.arrows_fly}
+    @left.cooldown
+    @right.cooldown
     
 
   end
@@ -63,23 +66,23 @@ def button_action
   end
   # Rekrutacja jednostek
   if button_down? Gosu::Kb1 then
-    @left.units.push(Unit.new(0,@res_y-100,self,"left","pikeman"))
+    @left.recruit(0,@res_y-100,"left","pikeman")
   end
   if button_down? Gosu::Kb0 then
-    @right.units.push(Unit.new(@res_x,@res_y-100,self,"right","pikeman"))
+    @right.recruit(@res_x,@res_y-100,"right","pikeman")
   end
   if button_down? Gosu::Kb2 then
-    @left.units.push(Unit.new(0,@res_y-100,self,"left","swordsman"))
+    @left.recruit(0,@res_y-100,"left","swordsman")
   end
   if button_down? Gosu::Kb9 then
-    @right.units.push(Unit.new(@res_x,@res_y-100,self,"right","swordsman"))
+    @right.recruit(@res_x,@res_y-100,"right","swordsman")
   end
   if button_down? Gosu::Kb3 then
-    @left.units.push(Unit.new(0,@res_y-100,self,"left","horseman"))
+    @left.recruit(0,@res_y-100,"left","horseman")
   end
   if button_down? Gosu::Kb8 then
-    @right.units.push(Unit.new(@res_x,@res_y-100,self,"right","horseman"))
-end
+    @right.recruit(@res_x,@res_y-100,"right","horseman")
+  end
   if button_down? Gosu::KbLeft  then
     @right.walls.each { |x| x.bow.angle_change(false)}
   end

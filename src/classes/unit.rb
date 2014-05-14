@@ -5,6 +5,9 @@ class Unit < Object
   def initialize(x,y,window,player_id,type)
     super(x,y,window,player_id)
     @hp,@cost,@speed=0
+    @recruit_pikeman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_pikeman.wav")
+    @recruit_swordsman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_swordsman.wav")
+    @recruit_horseman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_horseman.wav")
     @type=type
     @z=2
 
@@ -25,7 +28,7 @@ class Unit < Object
 
   def draw()
 
-    @image.draw_rot(@x, @y, 1, 0, 0.5, 0.5, orientation, 1)
+    @image.draw_rot(@x, @y, @z, 0, 0.5, 0.5, orientation, 1)
     
     #draw_rot(x, y, z, angle, center_x = 0.5, center_y = 0.5, factor_x = 1, factor_y = 1, color = 0xffffffff, mode = :default) 
 =begin
@@ -61,9 +64,9 @@ end
 
     case type
 
-      when "swordsman" then @hp=100, @cost=100,@speed=1, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/swordsman/swordsman.gif")
-      when "pikeman" then @hp=100, @cost=100,@speed=0.5, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/pikeman/pikeman.gif")
-      when "horseman" then @hp=100, @cost=100,@speed=2, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/cavalier/horseman.gif")
+      when "swordsman" then @hp=100, @cost=100,@speed=1, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/swordsman/swordsman.gif"), @recruit_swordsman.play
+      when "pikeman" then @hp=100, @cost=100,@speed=0.5, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/pikeman/pikeman.gif"), @recruit_pikeman.play
+      when "horseman" then @hp=100, @cost=100,@speed=2, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/cavalier/horseman.gif"), @recruit_horseman.play
 
     end
 
