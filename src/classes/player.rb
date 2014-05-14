@@ -2,6 +2,7 @@ require 'gosu'
 require_relative '../classes/archer.rb'
 require_relative '../classes/building.rb'
 require_relative '../classes/unit.rb'
+require_relative '../classes/label.rb'
 
 class Player
   attr_accessor :walls, :units
@@ -14,7 +15,7 @@ class Player
     @cooldown_decay=0.995
     @walls=Array.new
     @units=Array.new
-    
+    @label=Label.new(@game_window,@orientation)
 
 
     if @orientation=="left"
@@ -38,6 +39,7 @@ class Player
 
 
   def draw
+    @label.draw
     @walls.each { |x| x.draw}
     unless @units.empty?
       @units.each { |u| u.draw}
@@ -46,6 +48,7 @@ class Player
 
   def recruit (x, y, player, unit)
     if @cooldown==100
+      @label.deny
       @count=true
       tmp=Unit.new(x,y,@game_window,player,unit)
       @units.push(tmp)
@@ -57,6 +60,7 @@ class Player
       if @cooldown<=50
         @count=false
         @cooldown=100
+        @label.draw
       else
         @cooldown*=@cooldown_decay
       end
