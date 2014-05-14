@@ -17,14 +17,13 @@ class Unit < Object
     init(@type)
   end
 
-  def draw()
-    
+  def draw()  
     img = @image[Gosu::milliseconds / @animation_speed % @image.size];
-    img.draw_rot(@x, @y, @z, 0, 0.2, 0.5, orientation, 1)
-    @buff+=0.1
+    img.draw_rot(@x, @y, @z, 0, 0.2, 1, orientation, 1)
   end
 
   def die()
+    @image=load_sprites("../data/graphics/Units/"+@type+"/die")
   end
 
   def move()
@@ -36,21 +35,14 @@ class Unit < Object
   end
 
   def attack(target)
-
+    @image=load_sprites("../data/graphics/Units/"+@type+"/attack")
   end
 
   def init(type)
-    # case type
-
-    #   when "swordsman" then @hp=100, @cost=100,@speed=1, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/swordsman/swordsman.gif"), @recruit_swordsman.play
-    #   when "pikeman" then @hp=100, @cost=100,@speed=0.5, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/pikeman/pikeman.gif"), @recruit_pikeman.play
-    #   when "horseman" then @hp=100, @cost=100,@speed=2, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/cavalier/horseman.gif"), @recruit_horseman.play
-    # end
-
     case type
       when "swordsman" then @hp=100, @cost=100,@speed=1.5, @image=load_sprites("../data/graphics/Units/swordsman/walk"), @recruit_swordsman.play
       when "pikeman" then @hp=100, @cost=100,@speed=1, @image=load_sprites("../data/graphics/Units/pikeman/walk"), @recruit_pikeman.play
-      when "horseman" then @hp=100, @cost=100,@speed=2, @image=load_sprites("../data/graphics/Units/cavalier/walk"), @recruit_horseman.play
+      when "horseman" then @hp=100, @cost=100,@speed=2, @image=load_sprites("../data/graphics/Units/horseman/walk"), @recruit_horseman.play
     end
 
   end

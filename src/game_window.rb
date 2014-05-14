@@ -14,6 +14,7 @@ class GameWindow < Gosu::Window
     super @res_x, @res_y, true
     @res_x+=0.0
     @res_y+=0.0
+    @res_y_recruit=@res_y-50
     self.caption = "Gladius"
     @background_sky = Gosu::Image.new(self, "../data/graphics/Background/sky.png", false)
     @background_ground = Gosu::Image.new(self, "../data/graphics/Background/grass1.jpg", false)
@@ -64,19 +65,19 @@ def button_action
   end
   # Rekrutacja jednostek
   if button_down? Gosu::Kb1 then
-    @left.recruit(0,@res_y-100,"left","pikeman")
+    @left.recruit(0,@res_y_recruit,"left","pikeman")
   end
   if button_down? Gosu::Kb0 then
     @right.recruit(@res_x,@res_y-100,"right","pikeman")
   end
   if button_down? Gosu::Kb2 then
-    @left.recruit(0,@res_y-100,"left","swordsman")
+    @left.recruit(0,@res_y_recruit,"left","swordsman")
   end
   if button_down? Gosu::Kb9 then
     @right.recruit(@res_x,@res_y-100,"right","swordsman")
   end
   if button_down? Gosu::Kb3 then
-    @left.recruit(0,@res_y-100,"left","horseman")
+    @left.recruit(0,@res_y_recruit,"left","horseman")
   end
   if button_down? Gosu::Kb8 then
     @right.recruit(@res_x,@res_y-100,"right","horseman")
