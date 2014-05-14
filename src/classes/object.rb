@@ -21,13 +21,12 @@ class Object
   def load_sprites (path) #"../data/graphics/Units/<unitname>/<Action>"
     images=[]
     i=0;
+    @count=Dir.glob(File.join(path, '**', '*')).select { |file| File.file?(file) }.count
     begin
-      while Gosu::Image.new(@game_window, path+"/"+i.to_s+".png")!=nil do
-      images << Gosu::Image.new(@game_window, path+"/"+i.to_s+".png")
+      for i in 0..@count
+        images << Gosu::Image.new(@game_window, path+"/"+i.to_s+".png")
       end
     rescue
-    i=nil
-    ensure
     return images
     end
   end

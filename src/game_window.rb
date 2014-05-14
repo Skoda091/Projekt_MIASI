@@ -25,15 +25,13 @@ class GameWindow < Gosu::Window
 
   def update
 
-    self.button_action
-    
+    self.button_action    
     @left.units.each {|u| u.move}
     @right.units.each {|u| u.move}
     @left.walls.each { |x| x.bow.arrows_fly}
     @right.walls.each { |x| x.bow.arrows_fly}
     @left.cooldown
     @right.cooldown
-    
 
   end
 

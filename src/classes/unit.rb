@@ -10,42 +10,21 @@ class Unit < Object
     @recruit_horseman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_horseman.wav")
     @type=type
     @z=2
-
-    # Load the full animation from tile-file media/droid.bmp
-=begin
-    @animation = Chingu::Animation.new(:file => "droid_11x15.bmp")
-    @animation.frame_names = { :scan => 0..5, :up => 6..7, :down => 8..9, :left => 10..11, :right => 12..13 }
-=end
-
-    # Start out by animation frames 0-5 (contained by @animation[:scan])
+    @animation_speed=100
     @frame_name = :scan
 
-
-
-
+    @buff=0
     init(@type)
   end
 
   def draw()
-
-    @image.draw_rot(@x, @y, @z, 0, 0.5, 0.5, orientation, 1)
     
-    #draw_rot(x, y, z, angle, center_x = 0.5, center_y = 0.5, factor_x = 1, factor_y = 1, color = 0xffffffff, mode = :default) 
-=begin
-  
-rescue Exception => e
-  
-end
-    img = @image[Gosu::milliseconds / 100 % @image.size];
-    img.draw(@x - img.width / 2.0, @y - img.height / 2.0, 0, 1, 1, 0xffffffff, :default)
-
-=end
-
-
+    img = @image[Gosu::milliseconds / @animation_speed % @image.size];
+    img.draw_rot(@x, @y, @z, 0, 0.2, 0.5, orientation, 1)
+    @buff+=0.1
   end
 
   def die()
-
   end
 
   def move()
@@ -61,21 +40,18 @@ end
   end
 
   def init(type)
+    # case type
+
+    #   when "swordsman" then @hp=100, @cost=100,@speed=1, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/swordsman/swordsman.gif"), @recruit_swordsman.play
+    #   when "pikeman" then @hp=100, @cost=100,@speed=0.5, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/pikeman/pikeman.gif"), @recruit_pikeman.play
+    #   when "horseman" then @hp=100, @cost=100,@speed=2, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/cavalier/horseman.gif"), @recruit_horseman.play
+    # end
 
     case type
-
-      when "swordsman" then @hp=100, @cost=100,@speed=1, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/swordsman/swordsman.gif"), @recruit_swordsman.play
-      when "pikeman" then @hp=100, @cost=100,@speed=0.5, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/pikeman/pikeman.gif"), @recruit_pikeman.play
-      when "horseman" then @hp=100, @cost=100,@speed=2, @image=Gosu::Image.new(@game_window, "../data/graphics/Units/cavalier/horseman.gif"), @recruit_horseman.play
-
+      when "swordsman" then @hp=100, @cost=100,@speed=1.5, @image=load_sprites("../data/graphics/Units/swordsman/walk"), @recruit_swordsman.play
+      when "pikeman" then @hp=100, @cost=100,@speed=1, @image=load_sprites("../data/graphics/Units/pikeman/walk"), @recruit_pikeman.play
+      when "horseman" then @hp=100, @cost=100,@speed=2, @image=load_sprites("../data/graphics/Units/cavalier/walk"), @recruit_horseman.play
     end
 
-=begin
-    case type
-      when "swordsman" then @hp=100, @cost=100,@speed=1, @image=Gosu::Image.load_tiles(@game_window, "../data/graphics/Units/swordsman2_anim.png", 80, 134, false)
-      when "pikeman" then @hp=100, @cost=100,@speed=0.5, @image=Gosu::Image::load_tiles(@game_window, "../data/graphics/Units/pikeman_anim.png", 74, 129, false)
-      when "horseman" then @hp=100, @cost=100,@speed=8, @image=Gosu::Image.load_tiles(@game_window, "../data/graphics/Units/horseman.gif", 54, 106, false)
-    end
-=end
   end
 end
