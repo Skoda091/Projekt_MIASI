@@ -68,19 +68,19 @@ def button_action
     @left.recruit(0,@res_y_recruit,"left","pikeman")
   end
   if button_down? Gosu::Kb0 then
-    @right.recruit(@res_x,@res_y-100,"right","pikeman")
+    @right.recruit(@res_x,@res_y_recruit,"right","pikeman")
   end
   if button_down? Gosu::Kb2 then
     @left.recruit(0,@res_y_recruit,"left","swordsman")
   end
   if button_down? Gosu::Kb9 then
-    @right.recruit(@res_x,@res_y-100,"right","swordsman")
+    @right.recruit(@res_x,@res_y_recruit,"right","swordsman")
   end
   if button_down? Gosu::Kb3 then
     @left.recruit(0,@res_y_recruit,"left","horseman")
   end
   if button_down? Gosu::Kb8 then
-    @right.recruit(@res_x,@res_y-100,"right","horseman")
+    @right.recruit(@res_x,@res_y_recruit,"right","horseman")
   end
   if button_down? Gosu::KbLeft  then
     @right.walls.each { |x| x.bow.angle_change(false)}

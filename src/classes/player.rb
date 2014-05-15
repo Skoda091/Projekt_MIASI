@@ -16,6 +16,8 @@ class Player
     @walls=Array.new
     @units=Array.new
     @label=Label.new(@game_window,@orientation)
+    @label.draw
+
 
 
     if @orientation=="left"
@@ -39,7 +41,11 @@ class Player
 
 
   def draw
-    @label.draw
+    if @cooldown<100&&@cooldown>50
+      @label.deny
+    else
+      @label.draw
+    end
     @walls.each { |x| x.draw}
     unless @units.empty?
       @units.each { |u| u.draw}
@@ -48,7 +54,6 @@ class Player
 
   def recruit (x, y, player, unit)
     if @cooldown==100
-      @label.deny
       @count=true
       tmp=Unit.new(x,y,@game_window,player,unit)
       @units.push(tmp)
@@ -60,7 +65,6 @@ class Player
       if @cooldown<=50
         @count=false
         @cooldown=100
-        @label.draw
       else
         @cooldown*=@cooldown_decay
       end
