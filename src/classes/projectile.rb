@@ -21,6 +21,7 @@ def warp (angle)
   @ttl=1000
   @colide=false
   @broken=false
+  @hit=false
 end
   def move
     @ttl-=2 #czas zycia pocisku
@@ -35,6 +36,9 @@ end
       unless @broken
       @game_window.right.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true end}
       @game_window.left.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true end}
+      
+      @game_window.right.units.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @hit=true end}
+      @game_window.left.units.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @hit=true end}
       end
 
       if @colide

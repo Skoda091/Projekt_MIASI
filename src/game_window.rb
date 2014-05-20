@@ -54,6 +54,21 @@ def button_down(id)
 end
 
 def button_action
+
+  #Strzelanie gracz lewy
+  #######################
+  if button_down? Gosu::KbLeft  then
+    @right.walls.each { |x| x.bow.angle_change(false)}
+  end
+  if button_down? Gosu::KbRight  then
+    @right.walls.each { |x| x.bow.angle_change(true)}
+  end
+  if button_down? Gosu::KbEnter then
+    @right.walls.each { |x| x.bow.shoot}
+  end
+
+  #Strzelanie gracz prawy
+  #######################
   if button_down? Gosu::KbA  then
     @left.walls.each { |x| x.bow.angle_change(false)}
   end
@@ -63,6 +78,8 @@ def button_action
   if button_down? Gosu::KbSpace then
     @left.walls.each { |x| x.bow.shoot}
   end
+
+  
   # Rekrutacja jednostek
   if button_down? Gosu::Kb1 then
     @left.recruit(0,@res_y_recruit,"left","pikeman")
@@ -82,15 +99,7 @@ def button_action
   if button_down? Gosu::Kb8 then
     @right.recruit(@res_x,@res_y_recruit,"right","horseman")
   end
-  if button_down? Gosu::KbLeft  then
-    @right.walls.each { |x| x.bow.angle_change(false)}
-  end
-  if button_down? Gosu::KbRight  then
-    @right.walls.each { |x| x.bow.angle_change(true)}
-  end
-  if button_down? Gosu::KbEnter then
-    @right.walls.each { |x| x.bow.shoot}
-  end
+  
 end
 
 def engine
