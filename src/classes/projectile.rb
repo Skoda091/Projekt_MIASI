@@ -21,6 +21,7 @@ def warp (angle)
   @ttl=1000
   @colide=false
   @broken=false
+  @hit=false
 end
   def move
     @ttl-=2 #czas zycia pocisku
@@ -33,6 +34,7 @@ end
     if @in_air
 
       unless @broken
+<<<<<<< HEAD
       @game_window.right.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true end}
       @game_window.left.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true end}
       
@@ -41,6 +43,15 @@ end
         else
           @game_window.left.units.each {|unit| unit.die if Gosu::distance(@x,@y,unit.x,unit.y)<35.0 }
         end
+=======
+        @game_window.right.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true end}
+        @game_window.left.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true end}
+        
+        @game_window.right.units.each { |unit| if Gosu::distance(@x,@y, unit.x,unit.y)<40.0  then @hit=true, @unit=unit end}
+        @game_window.left.units.each { |unit| if Gosu::distance(@x,@y, unit.x,unit.y)<40.0  then @hit=true, @unit=unit end}
+
+        @game_window.balloons.each { |e| if Gosu::distance(@x, @y, e.x,e.y)<30.0 then e.hit and return true end}
+>>>>>>> 40b9c68a4fea2a9a6beb9e1154fa0d004bcb4f7e
       end
 
       if @colide
@@ -51,14 +62,19 @@ end
         @broken=true
       end
 
-          @x+=@vel_x
-          @vel_y-=@g
-          @y-=@vel_y
-
-      else
-
-
+      if @hit
+        @unit.die
+        return true
       end
+      
+      @x+=@vel_x
+      @vel_y-=@g
+      @y-=@vel_y
+
+    else
+
+
+    end
 
     if @ttl<0
       return true

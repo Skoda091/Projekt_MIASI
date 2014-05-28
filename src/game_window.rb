@@ -1,12 +1,13 @@
 require 'gosu'
 
 load '../src/classes/unit.rb'
+load '../src/classes/balloon.rb'
 
 require_relative '../src/classes/player.rb'
 require_relative '../src/classes/engine.rb'
 
 class GameWindow < Gosu::Window
-  attr_accessor :left,:right,:res_x,:res_y
+  attr_accessor :left,:right,:res_x,:res_y,:balloons
   def initialize
 
     @z=0
@@ -22,9 +23,14 @@ class GameWindow < Gosu::Window
     @engin=Engine.new(self)
     @left=Player.new(self,"left",@engin)
     @right=Player.new(self,"right",@engin)
+
+    @balloons=Array.new
   end
 
   def update
+    @balloons << Balloon.new(self,"left") if rand((@balloons.count+1)*160)==0
+    @balloons.reject! {|b| b.dead? }
+    @balloons.each { |e| e.move}
 
     self.button_action
 
@@ -46,9 +52,13 @@ class GameWindow < Gosu::Window
     @background_sky.draw(0, 0, 0,@res_x/@background_sky.width,@res_y-100.0/@background_sky.height)
     @background_ground.draw(0,@res_y-100,0,@res_x/@background_ground.width,100.0/@background_ground.height)
 
+    
+
     @left.draw
     @right.draw
 
+
+    @balloons.each { |e| e.draw}
   end
 
 
@@ -59,6 +69,21 @@ def button_down(id)
 end
 
 def button_action
+
+  #Strzelanie gracz lewy
+  #######################
+  if button_down? Gosu::KbLeft  then
+    @right.walls.each { |x| x.bow.angle_change(false)}
+  end
+  if button_down? Gosu::KbRight  then
+    @right.walls.each { |x| x.bow.angle_change(true)}
+  end
+  if button_down? Gosu::KbEnter then
+    @right.walls.each { |x| x.bow.shoot}
+  end
+
+  #Strzelanie gracz prawy
+  #######################
   if button_down? Gosu::KbA  then
     @left.walls.each { |x| x.bow.angle_change(false)}
   end
@@ -68,6 +93,8 @@ def button_action
   if button_down? Gosu::KbSpace then
     @left.walls.each { |x| x.bow.shoot}
   end
+
+  
   # Rekrutacja jednostek
   if button_down? Gosu::Kb1 then
     @left.recruit(0,@res_y_recruit,"left","pikeman")
@@ -87,6 +114,7 @@ def button_action
   if button_down? Gosu::Kb8 then
     @right.recruit(@res_x,@res_y_recruit,"right","horseman")
   end
+<<<<<<< HEAD
   if button_down? Gosu::KbLeft  then
     @right.walls.each { |x| x.bow.angle_change(false)}
   end
@@ -96,6 +124,9 @@ def button_action
   if button_down? Gosu::KbRightShift then
     @right.walls.each { |x| x.bow.shoot}
   end
+=======
+  
+>>>>>>> 40b9c68a4fea2a9a6beb9e1154fa0d004bcb4f7e
 end
 
 def engine
