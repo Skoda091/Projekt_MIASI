@@ -31,6 +31,8 @@ class GameWindow < Gosu::Window
     @balloons << Balloon.new(self,"left") if rand((@balloons.count+1)*160)==0
     @balloons.reject! {|b| b.dead? }
     @balloons.each { |e| e.move}
+    @left.walls.reject! { |e| e.dead? }
+    @right.walls.reject! { |e| e.dead? }
 
     self.button_action
 

@@ -10,11 +10,37 @@ class Building < Object
     @height=height
     @y_down=@y
     @y=@y-(@height*64)
+    @hp=1000
+    @dead=false
+    @collapsed=false
+    @dead_time=100
   end
+
   def draw()
     for i in 0..@height do
       @image.draw_rot(@x, @y+i*64, 1, 0)
     end
     @bow.draw
   end
+
+  def hit(dmg)
+    @hp-=dmg
+    @hp=0 if @hp<0
+
+    @collapsed=true unless @hp>0
+  end
+
+  def dead?
+    if @collapsed
+      @dead_time-=1
+
+      unless @dead_time>0
+        @dead=true
+      end
+    end
+    return @dead
+  end
+
+
+
 end

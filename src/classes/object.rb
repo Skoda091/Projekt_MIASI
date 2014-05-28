@@ -1,4 +1,5 @@
 require 'gosu'
+require 'texplay'
 
 class Object
   attr_accessor :x,:y,:game_window,:player_id
@@ -20,6 +21,7 @@ class Object
 
   def draw
     @image.draw_rot(@x, @y,1,0) unless @image.nil?
+    @image.line 0, -100 , 50, 0, :thickness => 50
   end
   
   def load_sprites (path) #"../data/graphics/Units/<unitname>/<Action>"
@@ -34,4 +36,9 @@ class Object
     return images
     end
   end
+
+  def show_hp_bar
+  
+  end
+
 end

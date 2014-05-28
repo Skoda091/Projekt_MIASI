@@ -12,6 +12,8 @@ class Projectile < Object
     @arrow_hit_wall=Gosu::Sample.new(@game_window, "../data/sounds/arrow_hit_wall.wav")
     @image=Gosu::Image.new(@game_window, "../data/graphics/arrow.png")
     @in_air=true
+    @energy=0
+    @weight=1
   end
 def warp (angle)
   @base_angle=-angle
@@ -34,21 +36,13 @@ end
     if @in_air
 
       unless @broken
-      @game_window.right.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true end}
-      @game_window.left.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true end}
-      
-        if orientation==1 then
-          @game_window.right.units.each {|unit| unit.die if Gosu::distance(@x,@y,unit.x,unit.y)<35.0 }
-        else
-          @game_window.left.units.each {|unit| unit.die if Gosu::distance(@x,@y,unit.x,unit.y)<35.0 }
-        end
-        @game_window.right.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true end}
-        @game_window.left.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true end}
-        
+        @game_window.right.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true and wall.hit(@energy)end}
+        @game_window.left.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true and wall.hit(@energy)end}
+
         @game_window.right.units.each { |unit| if Gosu::distance(@x,@y, unit.x,unit.y)<40.0  then @hit=true, @unit=unit end}
         @game_window.left.units.each { |unit| if Gosu::distance(@x,@y, unit.x,unit.y)<40.0  then @hit=true, @unit=unit end}
 
-        @game_window.balloons.each { |e| if Gosu::distance(@x, @y, e.x,e.y)<30.0 then e.hit and return true end}
+        @game_window.balloons.each { |e| if Gosu::distance(@x, @y, e.x,e.y)<35.0 then e.hit and return true end}
       end
 
       if @colide
@@ -67,7 +61,7 @@ end
       @x+=@vel_x
       @vel_y-=@g
       @y-=@vel_y
-
+      @energy=@vel*@vel*@weight/2
     else
 
 

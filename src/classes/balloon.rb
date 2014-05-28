@@ -5,7 +5,10 @@ require_relative '../classes/object.rb'
 class Balloon < Object
   def initialize(window,player_id)
      super(rand(window.res_x-70)+35,rand(window.res_y-630)+30,window,player_id)
-     @image=Gosu::Image.new(@game_window, "../data/graphics/Balloon/b.png")
+     
+     @anim = load_sprites("../data/graphics/Balloon/Anim")
+     @image=@anim[0]
+
      @boom_sound=Gosu::Sample.new(@game_window, "../data/sounds/balloon.wav")
      @vel=0.75
      @base_angle=rand(350)+5
