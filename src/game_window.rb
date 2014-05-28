@@ -26,7 +26,12 @@ class GameWindow < Gosu::Window
 
   def update
 
-    self.button_action    
+    self.button_action
+
+    @left.units.reject! {|u| u.time_to_die<0}
+    @right.units.reject! {|u| u.time_to_die<0}
+
+
     @left.units.each {|u| u.move}
     @right.units.each {|u| u.move}
     @left.walls.each { |x| x.bow.arrows_fly}
@@ -88,7 +93,7 @@ def button_action
   if button_down? Gosu::KbRight  then
     @right.walls.each { |x| x.bow.angle_change(true)}
   end
-  if button_down? Gosu::KbEnter then
+  if button_down? Gosu::KbRightShift then
     @right.walls.each { |x| x.bow.shoot}
   end
 end

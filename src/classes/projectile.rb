@@ -35,6 +35,12 @@ end
       unless @broken
       @game_window.right.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true end}
       @game_window.left.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true end}
+      
+        if orientation==1 then
+          @game_window.right.units.each {|unit| unit.die if Gosu::distance(@x,@y,unit.x,unit.y)<35.0 }
+        else
+          @game_window.left.units.each {|unit| unit.die if Gosu::distance(@x,@y,unit.x,unit.y)<35.0 }
+        end
       end
 
       if @colide

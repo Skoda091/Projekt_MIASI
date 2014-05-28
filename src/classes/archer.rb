@@ -9,9 +9,11 @@ class Archer < Object
 
 
     @image=Gosu::Image.new(@game_window, "../data/graphics/Units/Archer/Shoot/Angle/0.png")
+    @stand_image=@image;
     @arm=Gosu::Image.new(@game_window, "../data/graphics/Units/Archer/Shoot/Angle/arm.png")
     
-    #@reload = load_sprites("../data/graphics/Units/Archer/Reload")
+    @reload =load_sprites("../data/graphics/Units/Archer/Reload")
+
     @cursor=Gosu::Image.new(@game_window, "../data/graphics/cursor.png")
     @bow_shot_sound = Gosu::Sample.new(@game_window, "../data/sounds/cbow_04.wav")
     @reload_sound = Gosu::Sample.new(@game_window, "../data/sounds/cbowwind_01.wav")
@@ -28,11 +30,16 @@ class Archer < Object
   end
 
   def draw
-      #@image = @animation[Gosu::milliseconds / 100 % @animation.size];
-      @image.draw_rot(@x, @y, 1, 0,0.5,0.5, orientation )
-      #@cursor.draw_rot(@x-5, @y-15, 1, @angle,0.5,3)
+    if @cooldown<50 then
+      @image = @stand_image
       @arm.draw_rot(@x-5*orientation, @y-15, 1, @angle-90,0,0.5,orientation)
-      @arrows.each {|x| x.draw}
+    else
+      @image = @reload[Gosu::milliseconds / 250 % @reload.size];
+    end
+    @image.draw_rot(@x, @y, 1, 0,0.5,0.5, orientation )
+      #@cursor.draw_rot(@x-5, @y-15, 1, @angle,0.5,3)
+    
+    @arrows.each {|x| x.draw}
   end
 
   def angle_change (direction)
@@ -50,7 +57,7 @@ class Archer < Object
     ar=Projectile.new(self.x+12*orientation,self.y-17,self.game_window,self.player_id )
     orientation==1 ? ar.warp(angle+180) : ar.warp(angle)
     @arrows.push(ar)
-    @cooldown+=4000
+    @cooldown+=100
     @bow_shot_sound.play
     @reload_sound.play
     end
