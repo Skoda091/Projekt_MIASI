@@ -1,6 +1,7 @@
 require 'gosu'
 
 load '../src/classes/unit.rb'
+load '../src/classes/balloon.rb'
 
 require_relative '../src/classes/player.rb'
 require_relative '../src/classes/engine.rb'
@@ -22,9 +23,14 @@ class GameWindow < Gosu::Window
     @engin=Engine.new(self)
     @left=Player.new(self,"left",@engin)
     @right=Player.new(self,"right",@engin)
+
+    @balloons=Array.new
   end
 
   def update
+    @balloons << Balloon.new(self,"left") if rand((@balloons.count+1)*160)==0
+    @balloons.reject! {|b| b.dead? }
+    @balloons.each { |e| e.move}
 
     self.button_action    
     @left.units.each {|u| u.move}
@@ -40,6 +46,8 @@ class GameWindow < Gosu::Window
 
     @background_sky.draw(0, 0, 0,@res_x/@background_sky.width,@res_y-100.0/@background_sky.height)
     @background_ground.draw(0,@res_y-100,0,@res_x/@background_ground.width,100.0/@background_ground.height)
+
+    @balloons.each { |e| e.draw}
 
     @left.draw
     @right.draw

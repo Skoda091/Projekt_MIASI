@@ -17,6 +17,10 @@ class Object
       return -1
     end
   end
+
+  def draw
+    @image.draw_rot(@x, @y,1,0) unless @image.nil?
+  end
   
   def load_sprites (path) #"../data/graphics/Units/<unitname>/<Action>"
     images=[]
