@@ -114,7 +114,6 @@ def button_action
   if button_down? Gosu::Kb8 then
     @right.recruit(@res_x,@res_y_recruit,"right","horseman")
   end
-<<<<<<< HEAD
   if button_down? Gosu::KbLeft  then
     @right.walls.each { |x| x.bow.angle_change(false)}
   end
@@ -124,9 +123,7 @@ def button_action
   if button_down? Gosu::KbRightShift then
     @right.walls.each { |x| x.bow.shoot}
   end
-=======
   
->>>>>>> 40b9c68a4fea2a9a6beb9e1154fa0d004bcb4f7e
 end
 
 def engine

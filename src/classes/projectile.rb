@@ -34,7 +34,6 @@ end
     if @in_air
 
       unless @broken
-<<<<<<< HEAD
       @game_window.right.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true end}
       @game_window.left.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true end}
       
@@ -43,7 +42,6 @@ end
         else
           @game_window.left.units.each {|unit| unit.die if Gosu::distance(@x,@y,unit.x,unit.y)<35.0 }
         end
-=======
         @game_window.right.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true end}
         @game_window.left.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true end}
         
@@ -51,7 +49,6 @@ end
         @game_window.left.units.each { |unit| if Gosu::distance(@x,@y, unit.x,unit.y)<40.0  then @hit=true, @unit=unit end}
 
         @game_window.balloons.each { |e| if Gosu::distance(@x, @y, e.x,e.y)<30.0 then e.hit and return true end}
->>>>>>> 40b9c68a4fea2a9a6beb9e1154fa0d004bcb4f7e
       end
 
       if @colide
