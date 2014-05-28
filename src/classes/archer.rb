@@ -33,16 +33,6 @@ class Archer < Object
   end
 
   def draw
-    if @cooldown<50 then
-      @image = @stand_image
-      @arm.draw_rot(@x-5*orientation, @y-15, 1, @angle-90,0,0.5,orientation)
-    else
-      @image = @reload[Gosu::milliseconds / 250 % @reload.size];
-    end
-    @image.draw_rot(@x, @y, 1, 0,0.5,0.5, orientation )
-      #@cursor.draw_rot(@x-5, @y-15, 1, @angle,0.5,3)
-    
-    @arrows.each {|x| x.draw}
     if @cooldown > 50
        @image = @reload[Gosu::milliseconds / (@cooldown_addition/18) % @reload.size];
     else

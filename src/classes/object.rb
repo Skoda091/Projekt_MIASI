@@ -21,7 +21,7 @@ class Object
 
   def draw
     @image.draw_rot(@x, @y,1,0) unless @image.nil?
-    @image.line 0, -100 , 50, 0, :thickness => 50
+    @image.rect 0, -20 ,100,10, :color => :green, :fill => :green
   end
   
   def load_sprites (path) #"../data/graphics/Units/<unitname>/<Action>"
