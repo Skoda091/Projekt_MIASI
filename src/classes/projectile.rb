@@ -39,6 +39,8 @@ end
         
         @game_window.right.units.each { |unit| if Gosu::distance(@x,@y, unit.x,unit.y)<40.0  then @hit=true, @unit=unit end}
         @game_window.left.units.each { |unit| if Gosu::distance(@x,@y, unit.x,unit.y)<40.0  then @hit=true, @unit=unit end}
+
+        @game_window.balloons.each { |e| if Gosu::distance(@x, @y, e.x,e.y)<30.0 then e.hit and return true end}
       end
 
       if @colide

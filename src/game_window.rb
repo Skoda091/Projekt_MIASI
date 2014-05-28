@@ -7,7 +7,7 @@ require_relative '../src/classes/player.rb'
 require_relative '../src/classes/engine.rb'
 
 class GameWindow < Gosu::Window
-  attr_accessor :left,:right,:res_x,:res_y
+  attr_accessor :left,:right,:res_x,:res_y,:balloons
   def initialize
 
     @z=0
@@ -47,11 +47,13 @@ class GameWindow < Gosu::Window
     @background_sky.draw(0, 0, 0,@res_x/@background_sky.width,@res_y-100.0/@background_sky.height)
     @background_ground.draw(0,@res_y-100,0,@res_x/@background_ground.width,100.0/@background_ground.height)
 
-    @balloons.each { |e| e.draw}
+    
 
     @left.draw
     @right.draw
 
+
+    @balloons.each { |e| e.draw}
   end
 
 
