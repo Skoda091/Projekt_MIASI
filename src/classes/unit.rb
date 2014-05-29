@@ -23,24 +23,34 @@ class Unit < Object
     init(@type)
     @max_hp=400
     @hp=@max_hp
+
+    @cooldown_time=100.0
+    @cooldown_counter=0
   end
 
   def draw()
     if @is_dead==false then
       img = @image[Gosu::milliseconds / @animation_speed % @image.size];
     else
-      @frame_time-=10
-      if @frame_number<=@image.size-1 then
-        if @frame_time<0 then
-          @frame_number+=1
-          @frame_time=100
-        end
-        img = @image[@frame_number]
-      else
-          @time_to_die= -1
-      end
+      # @frame_time-=10
+      # if @frame_number<=@image.size-1 then
+      #   if @frame_time<0 then
+      #     @frame_number+=1
+      #     @frame_time=100
+      #   end
+      #   img = @image[@frame_number]
+      # else
+      #     @time_to_die= -1
+      # end
       
-             #img = @image[Gosu::milliseconds / @animation_speed % @image.size];
+      #        #img = @image[Gosu::milliseconds / @animation_speed % @image.size];
+
+      @cooldown_counter=@cooldown_time
+      if @cooldown_counter>0
+        set_image @image
+      else
+        img=@image
+      end
 
     end
       img.draw_rot(@x, @y, @z, 0, 0.2, 1, orientation, 1) unless img.nil?
