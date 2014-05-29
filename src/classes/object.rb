@@ -15,6 +15,10 @@ class Object
     @hp=@max_hp
     @pixels_above=15
     @pixels_left=0
+
+    @cooldown_time=100.0
+    @cooldown_counter=0
+
   end
 
   def orientation 
@@ -53,6 +57,10 @@ class Object
     @pixels_left=pixels_left
     @pixels_above=pixels_above
     @hp_bar_counter=@hp_bar_time
+  end
+
+  def set_image anim
+    @image = anim[anim.count-@cooldown_counter/(@cooldown_time/anim.size)]
   end
 
 end
