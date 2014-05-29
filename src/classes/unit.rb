@@ -21,6 +21,8 @@ class Unit < Object
 
     @buff=0
     init(@type)
+    @max_hp=400
+    @hp=@max_hp
   end
 
   def draw()
@@ -41,7 +43,8 @@ class Unit < Object
              #img = @image[Gosu::milliseconds / @animation_speed % @image.size];
 
     end
-      img.draw_rot(@x, @y, @z, 0, 0.2, 1, orientation, 1)
+      img.draw_rot(@x, @y, @z, 0, 0.2, 1, orientation, 1) unless img.nil?
+      super
   end
 
   def die
@@ -65,7 +68,7 @@ class Unit < Object
     @image=load_sprites("../data/graphics/Units/"+@type+"/attack")
   end
 
-  def hit damage
+  def hit(damage)
     unless @is_dead
       @hp-=damage
       unless @hp>0
@@ -73,7 +76,7 @@ class Unit < Object
         die
       end
 
-      show_hp_bar 10
+      show_hp_bar 60,25
     end
   end
 

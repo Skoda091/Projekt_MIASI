@@ -30,7 +30,7 @@ class Building < Object
     @hp=0 if @hp<0
 
     @collapsed=true unless @hp>0
-    show_hp_bar -10
+    show_hp_bar(-10, 0)
   end
 
   def dead?

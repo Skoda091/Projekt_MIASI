@@ -14,6 +14,7 @@ class Object
     @max_hp=100
     @hp=@max_hp
     @pixels_above=15
+    @pixels_left=0
   end
 
   def orientation 
@@ -27,7 +28,7 @@ class Object
   def draw
     #@image.draw_rot(@x, @y,1,0) unless @image.nil?
     if @hp_bar_counter>0
-      @hp_bar.draw_rot(@x, @y-@pixels_above,1,0)
+      @hp_bar.draw_rot(@x-@pixels_left, @y-@pixels_above,1,0)
       @hp_bar.rect 0,0,80,10, :color => :green, :fill => :green
       @hp_bar.rect (@hp*1.0)/@max_hp*80,0,80,10, :color => :red, :fill => :red
       @hp_bar.rect 0,0,79,9, :color => :black, :thickness => 4
@@ -48,7 +49,8 @@ class Object
     end
   end
 
-  def show_hp_bar pixels_above
+  def show_hp_bar (pixels_above, pixels_left)
+    @pixels_left=pixels_left
     @pixels_above=pixels_above
     @hp_bar_counter=@hp_bar_time
   end
