@@ -5,10 +5,12 @@ class Unit < Object
   attr_accessor :time_to_die
   def initialize(x,y,window,player_id,type)
     super(x,y,window,player_id)
-    @hp,@cost,@speed=0
+    @cost,@speed=0
+
     @recruit_pikeman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_pikeman.wav")
     @recruit_swordsman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_swordsman.wav")
     @recruit_horseman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_horseman.wav")
+
     @is_dead=false
     @time_to_die=900
     @frame_time=100
@@ -63,12 +65,24 @@ class Unit < Object
     @image=load_sprites("../data/graphics/Units/"+@type+"/attack")
   end
 
+  def hit damage
+    unless @is_dead
+      @hp-=damage
+      unless @hp>0
+        @hp=0
+        die
+      end
+
+      show_hp_bar 10
+    end
+  end
+
   def init(type)
     case type
-      when "swordsman" then @hp=100, @cost=100,@speed=1.5, @image=load_sprites("../data/graphics/Units/swordsman/walk"), @recruit_swordsman.play
-      when "pikeman" then @hp=100, @cost=100,@speed=1, @image=load_sprites("../data/graphics/Units/pikeman/walk"), @recruit_pikeman.play
-      when "horseman" then @hp=100, @cost=100,@speed=2, @image=load_sprites("../data/graphics/Units/horseman/walk"), @recruit_horseman.play
+      when "swordsman" then @max_hp=110, @cost=100,@speed=1.5, @image=load_sprites("../data/graphics/Units/swordsman/walk"), @recruit_swordsman.play
+      when "pikeman" then @max_hp=150, @cost=100,@speed=1, @image=load_sprites("../data/graphics/Units/pikeman/walk"), @recruit_pikeman.play
+      when "horseman" then @max_hp=200, @cost=100,@speed=2, @image=load_sprites("../data/graphics/Units/horseman/walk"), @recruit_horseman.play
     end
-
+    @hp=@max_hp
   end
 end

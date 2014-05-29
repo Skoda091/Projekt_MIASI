@@ -12,7 +12,7 @@ class Object
     @hp_bar_counter=0
     @hp_bar_time=200
     @max_hp=100
-    @hp=100
+    @hp=@max_hp
     @pixels_above=15
   end
 
