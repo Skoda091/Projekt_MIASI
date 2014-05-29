@@ -26,15 +26,15 @@ class Archer < Object
       else
       @angle=135.0
     end
-    @cooldown_addition=4000
-    @cooldown=100.0
-    @cooldown_decay=0.95
+    @cooldown_time=100.0
+    @cooldown_counter=0
 
   end
 
   def draw
-    if @cooldown > 50
-       @image = @reload[Gosu::milliseconds / (@cooldown_addition/18) % @reload.size];
+    if @cooldown_counter > 0
+       #@image = @reload[Gosu::milliseconds / (@cooldown_addition/18) % @reload.size];
+       @image = @reload[@reload.count-@cooldown_counter/(@cooldown_time/@reload.size)]
     else
       @image=@img
       @arm.draw_rot(@x-5*orientation, @y-15, 1, @angle-90,0,0.5,orientation)
@@ -57,12 +57,11 @@ class Archer < Object
   end
 
   def shoot
-    if @cooldown<50
+    if @cooldown_counter==0
     ar=Projectile.new(self.x+12*orientation,self.y-17,self.game_window,self.player_id )
     orientation==1 ? ar.warp(angle+180) : ar.warp(angle)
     @arrows.push(ar)
-    @cooldown+=100
-    @cooldown+=@cooldown_addition
+    @cooldown_counter=@cooldown_time
     @bow_shot_sound.play
     @reload_sound.play
     end
@@ -70,7 +69,8 @@ class Archer < Object
 
   def arrows_fly
     @arrows.reject! {|x| x.move}
-    @cooldown*=@cooldown_decay
+    @cooldown_counter-=1 if @cooldown_counter>0
+
   end
 
 

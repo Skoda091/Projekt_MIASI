@@ -10,7 +10,8 @@ class Building < Object
     @height=height
     @y_down=@y
     @y=@y-(@height*64)
-    @hp=1000
+    @max_hp=1000
+    @hp=@max_hp
     @dead=false
     @collapsed=false
     @dead_time=100
@@ -21,6 +22,7 @@ class Building < Object
       @image.draw_rot(@x, @y+i*64, 1, 0)
     end
     @bow.draw
+    super
   end
 
   def hit(dmg)
@@ -28,6 +30,7 @@ class Building < Object
     @hp=0 if @hp<0
 
     @collapsed=true unless @hp>0
+    show_hp_bar -10
   end
 
   def dead?

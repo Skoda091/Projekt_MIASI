@@ -17,7 +17,8 @@ class Balloon < Object
      @ttl=2000
      @boom=false
      @died=false
-     @dead_time=100
+     @dead_time=42
+     @dead_counter=@dead_time
      
   end
 
@@ -43,8 +44,9 @@ class Balloon < Object
         end
       end
     else
-      @dead_time-=1
-      @died=true if @dead_time<1
+      @dead_counter-=1
+      @image=@anim[@anim.count-@dead_counter/(@dead_time/3)]
+      @died=true if @dead_counter<1
     end
   end
 
@@ -52,9 +54,15 @@ class Balloon < Object
     @died
   end
 
+  def draw
+    @image.draw_rot(@x, @y,1,0) unless @image.nil?
+  end
+
   def hit
-    @boom_sound.play
-    @boom=true
+    unless @boom
+      @boom_sound.play
+      @boom=true
+    end
   end
 
 

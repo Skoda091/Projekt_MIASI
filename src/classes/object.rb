@@ -8,7 +8,12 @@ class Object
     @game_window=window
     @player_id=player_id #left, right, neutral
     @image=nil
-    
+    @hp_bar= TexPlay.create_blank_image(window, 80, 80)
+    @hp_bar_counter=0
+    @hp_bar_time=200
+    @max_hp=100
+    @hp=100
+    @pixels_above=15
   end
 
   def orientation 
@@ -20,8 +25,14 @@ class Object
   end
 
   def draw
-    @image.draw_rot(@x, @y,1,0) unless @image.nil?
-    @image.rect 0, -20 ,100,10, :color => :green, :fill => :green
+    #@image.draw_rot(@x, @y,1,0) unless @image.nil?
+    if @hp_bar_counter>0
+      @hp_bar.draw_rot(@x, @y-@pixels_above,1,0)
+      @hp_bar.rect 0,0,80,10, :color => :green, :fill => :green
+      @hp_bar.rect (@hp*1.0)/@max_hp*80,0,80,10, :color => :red, :fill => :red
+      @hp_bar.rect 0,0,79,9, :color => :black, :thickness => 4
+      @hp_bar_counter-=1
+    end
   end
   
   def load_sprites (path) #"../data/graphics/Units/<unitname>/<Action>"
@@ -37,8 +48,9 @@ class Object
     end
   end
 
-  def show_hp_bar
-  
+  def show_hp_bar pixels_above
+    @pixels_above=pixels_above
+    @hp_bar_counter=@hp_bar_time
   end
 
 end
