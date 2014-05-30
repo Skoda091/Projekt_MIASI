@@ -2,11 +2,11 @@ require 'gosu'
 load '../src/classes/object.rb'
 
 class Unit < Object
-  attr_accessor :remove_unit
+  attr_accessor :remove_unit, :speed, :max_unit_speed
   def initialize(x,y,window,player_id,type)
     super(x,y,window,player_id)
     @cost,@speed=0
-
+    @max_unit_speed=0
    
     @is_dead=false
     @type=type
@@ -39,7 +39,7 @@ class Unit < Object
     end
 
     super
-      
+
   end
 
   def die
@@ -86,6 +86,7 @@ class Unit < Object
       @recruit_swordsman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_swordsman.wav")
       @max_hp=350
       @speed=1.5
+      @max_unit_speed=@speed
       @anim_move=load_sprites("../data/graphics/Units/swordsman/walk")
       @recruit_swordsman.play
       @cost=100
@@ -94,6 +95,7 @@ class Unit < Object
       @recruit_pikeman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_pikeman.wav")
       @max_hp=300
       @speed=1
+      @max_unit_speed=@speed
       @anim_move=load_sprites("../data/graphics/Units/pikeman/walk")
       @recruit_pikeman.play
       @cost=100
@@ -102,6 +104,7 @@ class Unit < Object
       @recruit_horseman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_horseman.wav")
       @max_hp=400
       @speed=2
+      @max_unit_speed=@speed
       @anim_move=load_sprites("../data/graphics/Units/horseman/walk")
       @recruit_horseman.play
       @cost=100

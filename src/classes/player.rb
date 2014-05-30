@@ -72,4 +72,28 @@ class Player
     end
   end
 
+  def collision
+    i=0
+    if @units.count>1
+      @units.each {
+                    |u|
+                    u.speed = u.max_unit_speed
+                    if u!=@units[0]
+                      if Gosu::distance(u.x,u.y, @units[i].x,@units[i].y)<80.0
+                        u.speed = @units[i].speed
+                      else
+                        u.speed = u.max_unit_speed
+                      end
+                      if i==@units.count-1
+                        break
+                      else
+                      i += 1
+                      end
+                    end
+                  }
+    end
+  end
+
+
+
 end

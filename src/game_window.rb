@@ -45,6 +45,9 @@ class GameWindow < Gosu::Window
     @left.corpse.each {|u| u.corpse}
     @right.corpse.each {|u| u.corpse}
 
+    @left.collision
+    @right.collision
+
 
     @left.units.each {|u| u.move}
     @right.units.each {|u| u.move}
@@ -52,7 +55,7 @@ class GameWindow < Gosu::Window
     @right.walls.each { |x| x.bow.arrows_fly}
     @left.cooldown
     @right.cooldown
-    
+
 
   end
 
