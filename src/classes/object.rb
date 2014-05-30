@@ -59,6 +59,10 @@ class Object
     @hp_bar_counter=@hp_bar_time
   end
 
+  def hide_hp_bar
+    @hp_bar_counter=0
+  end
+
   def set_image anim
     @image = anim[anim.size-1-@cooldown_counter/(@cooldown_time/anim.size)]
   end

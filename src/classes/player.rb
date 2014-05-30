@@ -77,9 +77,9 @@ class Player
     if @units.count>1
       @units.each {
                     |u|
-                    u.speed = u.max_unit_speed
+                    # u.speed = u.max_unit_speed
                     if u!=@units[0]
-                      if Gosu::distance(u.x,u.y, @units[i].x,@units[i].y)<80.0
+                      if Gosu::distance(u.x,u.y, @units[i].x,@units[i].y)<u.radius+@units[i].radius
                         u.speed = @units[i].speed
                       else
                         u.speed = u.max_unit_speed
@@ -93,7 +93,4 @@ class Player
                   }
     end
   end
-
-
-
 end

@@ -2,11 +2,12 @@ require 'gosu'
 load '../src/classes/object.rb'
 
 class Unit < Object
-  attr_accessor :remove_unit, :speed, :max_unit_speed
+  attr_accessor :remove_unit, :speed, :max_unit_speed, :radius
   def initialize(x,y,window,player_id,type)
     super(x,y,window,player_id)
     @cost,@speed=0
     @max_unit_speed=0
+    @radius=0
    
     @is_dead=false
     @type=type
@@ -33,6 +34,7 @@ class Unit < Object
 
 
     else
+      hide_hp_bar
       set_image @anim_die
       @cooldown_counter-=1
       @remove_unit=true unless @cooldown_counter>0
@@ -90,6 +92,7 @@ class Unit < Object
       @anim_move=load_sprites("../data/graphics/Units/swordsman/walk")
       @recruit_swordsman.play
       @cost=100
+      @radius=25
     end
     if type=='pikeman'
       @recruit_pikeman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_pikeman.wav")
@@ -99,6 +102,7 @@ class Unit < Object
       @anim_move=load_sprites("../data/graphics/Units/pikeman/walk")
       @recruit_pikeman.play
       @cost=100
+      @radius=30
     end
     if type=='horseman'
       @recruit_horseman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_horseman.wav")
@@ -108,6 +112,7 @@ class Unit < Object
       @anim_move=load_sprites("../data/graphics/Units/horseman/walk")
       @recruit_horseman.play
       @cost=100
+      @radius=55
     end
       @cooldown_time=@frame_time*@anim_move.size
       @hp=@max_hp
