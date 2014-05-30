@@ -60,9 +60,7 @@ class Object
   end
 
   def set_image anim
-    @image = anim[anim.size-@cooldown_counter/(@cooldown_time/anim.size)]
-    # @image = anim[anim.count-1-@cooldown_counter/(@cooldown_time/anim.size)]
-
+    @image = anim[anim.size-1-@cooldown_counter/(@cooldown_time/anim.size)]
   end
 
 end
