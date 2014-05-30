@@ -5,7 +5,7 @@ require_relative '../classes/unit.rb'
 require_relative '../classes/label.rb'
 
 class Player
-  attr_accessor :walls, :units
+  attr_accessor :walls, :units, :corpse
   def initialize (window,orientation,engine)
     @game_window=window
     @orientation=orientation
@@ -17,7 +17,7 @@ class Player
     @units=Array.new
     @label=Label.new(@game_window,@orientation)
     @label.draw
-
+    @corpse=Array.new
 
 
     if @orientation=="left"
@@ -50,6 +50,7 @@ class Player
     unless @units.empty?
       @units.each { |u| u.draw}
     end
+    @corpse.each { |u| u.draw}  
   end
 
   def recruit (x, y, player, unit)

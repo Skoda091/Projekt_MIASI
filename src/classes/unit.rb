@@ -25,7 +25,6 @@ class Unit < Object
       @image.draw_rot(@x, @y, @z, 0, 0.2, 1, orientation, 1) and @previous_image=@image unless @image.nil?
       @previous_image.draw_rot(@x, @y, @z, 0, 0.2, 1, orientation, 1) if @image.nil? and !@previous_image.nil?
 
-
     if @is_dead==false then
 
       set_image @anim_move   
@@ -45,7 +44,7 @@ class Unit < Object
 
   def die
     @is_dead=true
-    @cooldown_time=100
+    @cooldown_time=50
     @cooldown_counter=@cooldown_time
     @anim_die=load_sprites("../data/graphics/Units/"+@type+"/die")
   end
@@ -76,6 +75,10 @@ class Unit < Object
 
       show_hp_bar 60,25
     end
+  end
+  def corpse
+    @image=@anim_die[@anim_die.size-1]
+    # abort(@image.inspect)
   end
 
   def init(type)

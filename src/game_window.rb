@@ -36,8 +36,14 @@ class GameWindow < Gosu::Window
 
     self.button_action
 
+    @left.units.each {|d| d.corpse and @left.corpse << d if d.remove_unit }
+    @right.units.each {|d| d.corpse and @right.corpse << d if d.remove_unit }
+
     @left.units.reject! {|u| u.remove_unit}
     @right.units.reject! {|u| u.remove_unit}
+
+    @left.corpse.each {|u| u.corpse}
+    @right.corpse.each {|u| u.corpse}
 
 
     @left.units.each {|u| u.move}
@@ -46,6 +52,7 @@ class GameWindow < Gosu::Window
     @right.walls.each { |x| x.bow.arrows_fly}
     @left.cooldown
     @right.cooldown
+    
 
   end
 
