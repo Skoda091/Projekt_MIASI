@@ -36,8 +36,8 @@ class GameWindow < Gosu::Window
 
     self.button_action
 
-    @left.units.reject! {|u| u.time_to_die<0}
-    @right.units.reject! {|u| u.time_to_die<0}
+    @left.units.reject! {|u| u.remove_unit}
+    @right.units.reject! {|u| u.remove_unit}
 
 
     @left.units.each {|u| u.move}

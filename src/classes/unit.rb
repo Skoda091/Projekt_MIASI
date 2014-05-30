@@ -2,64 +2,52 @@ require 'gosu'
 load '../src/classes/object.rb'
 
 class Unit < Object
-  attr_accessor :time_to_die
+  attr_accessor :remove_unit
   def initialize(x,y,window,player_id,type)
     super(x,y,window,player_id)
     @cost,@speed=0
 
-    @recruit_pikeman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_pikeman.wav")
-    @recruit_swordsman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_swordsman.wav")
-    @recruit_horseman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_horseman.wav")
-
+   
     @is_dead=false
-    @time_to_die=900
-    @frame_time=100
-    @frame_number=0
     @type=type
     @z=2
-    @animation_speed=100
+    @frame_time=6
+    @cooldown_counter=@cooldown_time
+
+    @remove_unit=false
 
     @buff=0
     init(@type)
-    @max_hp=400
-    @hp=@max_hp
 
-    @cooldown_time=100.0
-    @cooldown_counter=0
   end
 
   def draw()
+      @image.draw_rot(@x, @y, @z, 0, 0.2, 1, orientation, 1) and @previous_image=@image unless @image.nil?
+      @previous_image.draw_rot(@x, @y, @z, 0, 0.2, 1, orientation, 1) if @image.nil? and !@previous_image.nil?
+
+
     if @is_dead==false then
-      img = @image[Gosu::milliseconds / @animation_speed % @image.size];
+
+      set_image @anim_move   
+      @cooldown_counter-=1
+      @cooldown_counter=@cooldown_time unless @cooldown_counter>0
+
+
     else
-      # @frame_time-=10
-      # if @frame_number<=@image.size-1 then
-      #   if @frame_time<0 then
-      #     @frame_number+=1
-      #     @frame_time=100
-      #   end
-      #   img = @image[@frame_number]
-      # else
-      #     @time_to_die= -1
-      # end
-      
-      #        #img = @image[Gosu::milliseconds / @animation_speed % @image.size];
-
-      @cooldown_counter=@cooldown_time
-      if @cooldown_counter>0
-        set_image @image
-      else
-        img=@image
-      end
-
+      set_image @anim_die
+      @cooldown_counter-=1
+      @remove_unit=true unless @cooldown_counter>0
     end
-      img.draw_rot(@x, @y, @z, 0, 0.2, 1, orientation, 1) unless img.nil?
-      super
+
+    super
+      
   end
 
   def die
     @is_dead=true
-    @image=load_sprites("../data/graphics/Units/"+@type+"/die")
+    @cooldown_time=100
+    @cooldown_counter=@cooldown_time
+    @anim_die=load_sprites("../data/graphics/Units/"+@type+"/die")
   end
 
   def move()
@@ -75,7 +63,7 @@ class Unit < Object
   end
 
   def attack(target)
-    @image=load_sprites("../data/graphics/Units/"+@type+"/attack")
+    @anim_attack=load_sprites("../data/graphics/Units/"+@type+"/attack")
   end
 
   def hit(damage)
@@ -91,11 +79,31 @@ class Unit < Object
   end
 
   def init(type)
-    case type
-      when "swordsman" then @max_hp=110, @cost=100,@speed=1.5, @image=load_sprites("../data/graphics/Units/swordsman/walk"), @recruit_swordsman.play
-      when "pikeman" then @max_hp=150, @cost=100,@speed=1, @image=load_sprites("../data/graphics/Units/pikeman/walk"), @recruit_pikeman.play
-      when "horseman" then @max_hp=200, @cost=100,@speed=2, @image=load_sprites("../data/graphics/Units/horseman/walk"), @recruit_horseman.play
+    if type=='swordsman'
+      @recruit_swordsman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_swordsman.wav")
+      @max_hp=350
+      @speed=1.5
+      @anim_move=load_sprites("../data/graphics/Units/swordsman/walk")
+      @recruit_swordsman.play
+      @cost=100
     end
-    @hp=@max_hp
+    if type=='pikeman'
+      @recruit_pikeman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_pikeman.wav")
+      @max_hp=300
+      @speed=1
+      @anim_move=load_sprites("../data/graphics/Units/pikeman/walk")
+      @recruit_pikeman.play
+      @cost=100
+    end
+    if type=='horseman'
+      @recruit_horseman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_horseman.wav")
+      @max_hp=400
+      @speed=2
+      @anim_move=load_sprites("../data/graphics/Units/horseman/walk")
+      @recruit_horseman.play
+      @cost=100
+    end
+      @cooldown_time=@frame_time*@anim_move.size
+      @hp=@max_hp
   end
 end
