@@ -2,7 +2,7 @@ require 'gosu'
 load '../src/classes/object.rb'
 
 class Unit < Object
-  attr_accessor :remove_unit, :speed, :max_unit_speed, :radius, :attack
+  attr_accessor :remove_unit, :speed, :max_unit_speed, :radius, :attack, :damage
   def initialize(x,y,window,player_id,type)
     super(x,y,window,player_id)
     @cost,@speed=0
@@ -10,10 +10,13 @@ class Unit < Object
     @radius=0
     @attack=false
     @is_dead=false
+    @damage=0
     @type=type
     @z=2
     @frame_time=6
     @cooldown_counter=@cooldown_time
+    @attack_time=50
+    @attack_counter=@attack_time
 
     @remove_unit=false
 
@@ -64,7 +67,7 @@ class Unit < Object
     @anim_die=load_sprites("../data/graphics/"+@player_id+"/Units/"+@type+"/die")
   end
 
-  def move()
+  def move
     if @is_dead==false then
       if orientation==1
         @x+=@speed
@@ -76,8 +79,12 @@ class Unit < Object
     end
   end
 
-  def attacking
-    #@anim_attack=load_sprites("../data/graphics/Units/"+@type+"/attack")
+  def attacking(damage)
+    if @attack_counter<=0
+      @attack_counter=@attack_time
+      hit(damage)
+    end
+    @attack_counter-=1
   end
 
   def hit(damage)
@@ -100,6 +107,7 @@ class Unit < Object
     if type=='swordsman'
       @recruit_swordsman=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/recruit_swordsman.wav")
       @max_hp=350
+      @damage=100
       @speed=1.5
       @max_unit_speed=@speed
       @anim_move=load_sprites("../data/graphics/"+@player_id+"/Units/swordsman/walk")
@@ -111,6 +119,7 @@ class Unit < Object
     if type=='pikeman'
       @recruit_pikeman=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/recruit_pikeman.wav")
       @max_hp=300
+      @damage=80
       @speed=1
       @max_unit_speed=@speed
       @anim_move=load_sprites("../data/graphics/"+@player_id+"/Units/pikeman/walk")
@@ -122,6 +131,7 @@ class Unit < Object
     if type=='horseman'
       @recruit_horseman=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/recruit_horseman.wav")
       @max_hp=400
+      @damage=150
       @speed=2
       @max_unit_speed=@speed
       @anim_move=load_sprites("../data/graphics/"+@player_id+"/Units/horseman/walk")

@@ -89,6 +89,8 @@ def players_units_colision
       @right.units.first.speed=0
       @left.units.first.attack=true
       @right.units.first.attack=true
+      @left.units.first.attacking(@right.units.first.damage)
+      @right.units.first.attacking(@left.units.first.damage)
     else
       @left.units.first.speed=@left.units.first.max_unit_speed
       @right.units.first.speed=@right.units.first.max_unit_speed
