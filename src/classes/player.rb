@@ -43,7 +43,7 @@ class Player
 
 
   def draw
-    if @cooldown.between?(50,100) 
+    if @cooldown.between?(50,99) 
       @label.deny
     else
       @label.draw
