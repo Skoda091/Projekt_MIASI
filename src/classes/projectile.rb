@@ -10,7 +10,7 @@ class Projectile < Object
     super
     @arrow_hit_ground=Gosu::Sample.new(@game_window, "../data/sounds/arrow_hit_ground.wav")
     @arrow_hit_wall=Gosu::Sample.new(@game_window, "../data/sounds/arrow_hit_wall.wav")
-    @image=Gosu::Image.new(@game_window, "../data/graphics/arrow.png")
+    @image=Gosu::Image.new(@game_window, "../data/graphics/Units/Archer/projectile.png")
     @in_air=true
     @energy=0.0
     @weight=1
