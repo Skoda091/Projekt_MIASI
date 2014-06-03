@@ -86,14 +86,20 @@ def players_units_colision
   if !@left.units.empty?&&!@right.units.empty?
     if Gosu::distance(@left.units.first.x,@left.units.first.y, @right.units.first.x,@right.units.first.y)<@left.units.first.radius+@right.units.first.radius+20
       @left.units.first.speed=0
-      @right.units.first.speed=0    
+      @right.units.first.speed=0
+      @left.units.first.attack=true
+      @right.units.first.attack=true
     else
       @left.units.first.speed=@left.units.first.max_unit_speed
       @right.units.first.speed=@right.units.first.max_unit_speed
+      @left.units.first.attack=false
+      @right.units.first.attack=false
     end
   else
     @left.units.first.speed=@left.units.first.max_unit_speed if !@left.units.empty?
     @right.units.first.speed=@right.units.first.max_unit_speed if !@right.units.empty?
+    @left.units.first.attack=false if !@left.units.empty?
+    @right.units.first.attack=false if !@right.units.empty?
   end
 end
 

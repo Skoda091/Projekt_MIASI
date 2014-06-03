@@ -2,13 +2,13 @@ require 'gosu'
 load '../src/classes/object.rb'
 
 class Unit < Object
-  attr_accessor :remove_unit, :speed, :max_unit_speed, :radius
+  attr_accessor :remove_unit, :speed, :max_unit_speed, :radius, :attack
   def initialize(x,y,window,player_id,type)
     super(x,y,window,player_id)
     @cost,@speed=0
     @max_unit_speed=0
     @radius=0
-   
+    @attack=false
     @is_dead=false
     @type=type
     @z=2
@@ -28,10 +28,23 @@ class Unit < Object
 
     if @is_dead==false then
 
-      set_image @anim_move   
-      @cooldown_counter-=1
-      @cooldown_counter=@cooldown_time unless @cooldown_counter>0
+      # set_image @anim_move   
+      # @cooldown_counter-=1
+      # @cooldown_counter=@cooldown_time unless @cooldown_counter>0
 
+      if @attack==false
+        set_image @anim_move   
+        @cooldown_counter-=1
+        @cooldown_counter=@cooldown_time unless @cooldown_counter>0
+
+        if @speed==0
+          @image=@anim_move[0]
+        end
+      else
+        set_image @anim_attack
+        @cooldown_counter-=1
+        @cooldown_counter=@cooldown_time unless @cooldown_counter>0
+      end
 
     else
       hide_hp_bar
@@ -48,7 +61,7 @@ class Unit < Object
     @is_dead=true
     @cooldown_time=50
     @cooldown_counter=@cooldown_time
-    @anim_die=load_sprites("../data/graphics/Units/"+@type+"/die")
+    @anim_die=load_sprites("../data/graphics/"+@player_id+"/Units/"+@type+"/die")
   end
 
   def move()
@@ -63,8 +76,8 @@ class Unit < Object
     end
   end
 
-  def attack(target)
-    @anim_attack=load_sprites("../data/graphics/Units/"+@type+"/attack")
+  def attacking
+    #@anim_attack=load_sprites("../data/graphics/Units/"+@type+"/attack")
   end
 
   def hit(damage)
@@ -85,31 +98,34 @@ class Unit < Object
 
   def init(type)
     if type=='swordsman'
-      @recruit_swordsman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_swordsman.wav")
+      @recruit_swordsman=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/recruit_swordsman.wav")
       @max_hp=350
       @speed=1.5
       @max_unit_speed=@speed
-      @anim_move=load_sprites("../data/graphics/Units/swordsman/walk")
+      @anim_move=load_sprites("../data/graphics/"+@player_id+"/Units/swordsman/walk")
+      @anim_attack=load_sprites("../data/graphics/"+@player_id+"/Units/swordsman/attack")
       @recruit_swordsman.play
       @cost=100
       @radius=25
     end
     if type=='pikeman'
-      @recruit_pikeman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_pikeman.wav")
+      @recruit_pikeman=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/recruit_pikeman.wav")
       @max_hp=300
       @speed=1
       @max_unit_speed=@speed
-      @anim_move=load_sprites("../data/graphics/Units/pikeman/walk")
+      @anim_move=load_sprites("../data/graphics/"+@player_id+"/Units/pikeman/walk")
+      @anim_attack=load_sprites("../data/graphics/"+@player_id+"/Units/pikeman/attack")
       @recruit_pikeman.play
       @cost=100
       @radius=30
     end
     if type=='horseman'
-      @recruit_horseman=Gosu::Sample.new(@game_window, "../data/sounds/recruit_horseman.wav")
+      @recruit_horseman=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/recruit_horseman.wav")
       @max_hp=400
       @speed=2
       @max_unit_speed=@speed
-      @anim_move=load_sprites("../data/graphics/Units/horseman/walk")
+      @anim_move=load_sprites("../data/graphics/"+@player_id+"/Units/horseman/walk")
+      @anim_attack=load_sprites("../data/graphics/"+@player_id+"/Units/horseman/attack")
       @recruit_horseman.play
       @cost=100
       @radius=55
