@@ -8,9 +8,9 @@ class Projectile < Object
   def initialize (x,y,window,player_id)
 
     super
-    @arrow_hit_ground=Gosu::Sample.new(@game_window, "../data/sounds/arrow_hit_ground.wav")
-    @arrow_hit_wall=Gosu::Sample.new(@game_window, "../data/sounds/arrow_hit_wall.wav")
-    @image=Gosu::Image.new(@game_window, "../data/graphics/Units/Archer/projectile.png")
+    @arrow_hit_ground=Gosu::Sample.new(@game_window, "../data/sounds/"+player_id+"/arrow_hit_ground.wav")
+    @arrow_hit_wall=Gosu::Sample.new(@game_window, "../data/sounds/"+player_id+"/arrow_hit_wall.wav")
+    @image=Gosu::Image.new(@game_window, "../data/graphics/"+player_id+"/Units/Archer/projectile.png")
     @in_air=true
     @energy=0.0
     @weight=1
