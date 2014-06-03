@@ -2,12 +2,14 @@ require 'gosu'
 require_relative '../classes/object.rb'
 
 class Bird < Object
+  attr_accessor :arrow
   def initialize(window,player_id)
       orient=rand(2)
        super(orient==0 ? 0 : window.res_x,rand(window.res_y-630)+30,window,orient==0 ? 'left' : 'right')
        
        @fly_anim = load_sprites("../data/graphics/Bird/fly")
        @die_anim = load_sprites("../data/graphics/Bird/die")
+       @arrow=nil
 
        @image=@fly_anim[0]
 
@@ -56,7 +58,10 @@ class Bird < Object
   end
 
   def draw
-    @image.draw_rot(@x, @y, 1, 0,0.5,0.5, -1*orientation) unless @image.nil?     
+    @image.draw_rot(@x, @y, 1, 0,0.5,0.5, -1*orientation) unless @image.nil?
+    @arrow.x=@x
+    @arrow.y=@y
+    @arrow.draw unless @arrow.nil?
   end
 
   def hit
