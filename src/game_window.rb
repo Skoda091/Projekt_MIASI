@@ -162,6 +162,14 @@ def units_and_nexus_collision
   end
 end
 
+def win
+  if @left.nexus.hp<=0
+    
+  end
+  if @right.nexus.hp<=0
+  end
+end
+
 def button_action
 
   #Strzelanie gracz lewy

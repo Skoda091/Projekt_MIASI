@@ -2,6 +2,7 @@ require 'gosu'
 require_relative '../classes/object.rb'
 
 class Nexus < Object
+  attr_accessor :hp
   def initialize(x,y,window,player_id)
     super(x =x,y =y,window,player_id)
 
@@ -21,7 +22,9 @@ class Nexus < Object
   end
 
   def draw
+    if !@dead
       @image.draw_rot(@x, @y, @z, 0,0.5,0.5,-1*orientation*@scale,@scale)
+    end
     super
   end
 
