@@ -36,20 +36,31 @@ end
     if @in_air
 
       unless @broken
-        @game_window.right.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true and wall.hit(@energy)end}
-        @game_window.left.walls.each { |wall| if Gosu::distance(@x,@y, wall.x,wall.y)<40.0 or Gosu::distance(@x,@y, wall.x,wall.y_down)<40.0 then @colide=true and wall.hit(@energy)end}
-
-        @game_window.right.units.each { |unit| if Gosu::distance(@x,@y, unit.x,unit.y)<40.0  then  unit.hit(@energy) and return true end}
-        @game_window.left.units.each { |unit| if Gosu::distance(@x,@y, unit.x,unit.y)<40.0  then  unit.hit(@energy) and return true end}
+        if @player_id=='left'
+          @colide=true and @vel_x1=@vel_x and @vel_y1=@vel_y if Gosu::distance(@x,@y, @game_window.right.walls[1].x,@game_window.right.walls[1].y)<380.0
+        else
+          @colide=true and @vel_y1=@vel_y and @vel_y1=@vel_y if Gosu::distance(@x,@y, @game_window.left.walls[1].x,@game_window.left.walls[1].y)<380.0
+        end
+        @game_window.right.units.each { |unit| if Gosu::distance(@x,@y, unit.x,unit.y)<unit.radius  then  unit.hit(@energy) and return true end}
+        @game_window.left.units.each { |unit| if Gosu::distance(@x,@y, unit.x,unit.y)<unit.radius  then  unit.hit(@energy) and return true end}
 
         @game_window.birds.each { |e| if Gosu::distance(@x, @y, e.x,e.y)<35.0 then e.hit and e.arrow=self and return true end}
       end
 
       if @colide
-        @arrow_hit_wall.play
-        @vel_x=-0.3*@vel_x
-        @vel_y=0
-        @colide=false
+        # @arrow_hit_wall.play
+        if @player_id=='left'
+          dist = Gosu::distance(@x,@y, @game_window.right.walls[1].x,@game_window.right.walls[1].y)
+        else
+          dist = Gosu::distance(@x,@y, @game_window.left.walls[1].x,@game_window.left.walls[1].y)
+        end
+
+        # @vel_x*=dist/450.0
+        ang=Gosu::angle(0,0,@vel_x1,@vel_y1)
+        if ang<85
+          @vel_y-=@g+330*5/dist
+        end
+        # @colide=false
         @broken=true
       end
 

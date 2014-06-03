@@ -32,7 +32,7 @@ class Object
   def draw
     #@image.draw_rot(@x, @y,1,0) unless @image.nil?
     if @hp_bar_counter>0
-      @hp_bar.draw_rot(@x-@pixels_left, @y-@pixels_above,1,0)
+      @hp_bar.draw_rot(@x-@pixels_left, @y-@pixels_above,10,0)
       @hp_bar.rect 0,0,80,10, :color => :green, :fill => :green
       @hp_bar.rect (@hp*1.0)/@max_hp*80,0,80,10, :color => :red, :fill => :red
       @hp_bar.rect 0,0,79,9, :color => :black, :thickness => 4
