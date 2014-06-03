@@ -5,7 +5,8 @@ class Building < Object
   attr_accessor :bow,:y_down
   def initialize(x,y,window,player_id,height)
     super(x =x,y =y,window,player_id)
-    @image=Gosu::Image.new(@game_window, "../data/graphics/wall.png")
+    @image_normal=Gosu::Image.new(@game_window, "../data/graphics/"+player_id+"/Buildings/wall.png")
+    @image_blank=Gosu::Image.new(@game_window, "../data/graphics/"+player_id+"/Buildings/wall_blank.png")
     @z=1
     @height=height
     @y_down=@y
@@ -19,7 +20,7 @@ class Building < Object
 
   def draw()
     for i in 0..@height do
-      @image.draw_rot(@x, @y+i*64, 1, 0)
+      i==0 ? @image_blank.draw_rot(@x, @y+i*64, 1, 0) : @image_normal.draw_rot(@x, @y+i*64, 1, 0)
     end
     @bow.draw
     super

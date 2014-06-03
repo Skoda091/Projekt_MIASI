@@ -8,8 +8,11 @@ class Nexus < Object
     @image=Gosu::Image.new(@game_window, "../data/graphics/"+player_id+"/Buildings/nexus_full.png")
     @image_damaged=Gosu::Image.new(@game_window, "../data/graphics/"+player_id+"/Buildings/nexus_damaged.png")
 
-    @z=1
-   
+    @scale=1.5
+    @x+=@image.width*@scale/2*self.orientation
+    @y-=@image.height*@scale/3-10
+    @z=6
+    
     @max_hp=10000
     @hp=@max_hp
     @dead=false
@@ -18,7 +21,7 @@ class Nexus < Object
   end
 
   def draw
-      @image.draw_rot(@x, @y, 1, 0)
+      @image.draw_rot(@x, @y, @z, 0,0.5,0.5,-1*orientation*@scale,@scale)
     super
   end
 
