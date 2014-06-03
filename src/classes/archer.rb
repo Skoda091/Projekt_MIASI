@@ -7,18 +7,19 @@ class Archer < Object
   def initialize (x,y,window,player_id)
     super(x,y,window,player_id)
 
-    @img=Gosu::Image.new(@game_window, "../data/graphics/Units/Archer/Shoot/Angle/0.png")
-    @image=Gosu::Image.new(@game_window, "../data/graphics/Units/Archer/Shoot/Angle/0.png")
+
+    @img=Gosu::Image.new(@game_window, "../data/graphics/"+player_id+"/Units/Archer/Shoot/Angle/0.png")
+    @image=Gosu::Image.new(@game_window, "../data/graphics/"+player_id+"/Units/Archer/Shoot/Angle/0.png")
     @stand_image=@image;
-    @arm=Gosu::Image.new(@game_window, "../data/graphics/Units/Archer/Shoot/Angle/arm.png")
+    @arm=Gosu::Image.new(@game_window, "../data/graphics/"+player_id+"/Units/Archer/Shoot/Angle/arm.png")
     
 
-    @reload =load_sprites("../data/graphics/Units/Archer/Reload")
+    @reload =load_sprites("../data/graphics/"+player_id+"/Units/Archer/Reload")
 
-    @reload = load_sprites("../data/graphics/Units/Archer/Reload")
-    @cursor=Gosu::Image.new(@game_window, "../data/graphics/cursor.png")
-    @bow_shot_sound = Gosu::Sample.new(@game_window, "../data/sounds/cbow_04.wav")
-    @reload_sound = Gosu::Sample.new(@game_window, "../data/sounds/cbowwind_01.wav")
+    @bow_shot_sound = Gosu::Sample.new(@game_window, "../data/sounds/"+player_id+"/cbow_04.wav")
+    @reload_sound = Gosu::Sample.new(@game_window, "../data/sounds/"+player_id+"/cbowwind_01.wav")
+ 
+
 
     @arrows=Array.new
     if orientation==1
@@ -33,7 +34,6 @@ class Archer < Object
 
   def draw
     if @cooldown_counter > 0
-       #@image = @reload[Gosu::milliseconds / (@cooldown_addition/18) % @reload.size];
        set_image @reload
     else
       @image=@img
@@ -41,7 +41,6 @@ class Archer < Object
     end
      
       @image.draw_rot(@x, @y, 1, 0,0.5,0.5, orientation )
-      #@cursor.draw_rot(@x-5, @y-15, 1, @angle,0.5,3)
       
       @arrows.each {|x| x.draw}
   end
