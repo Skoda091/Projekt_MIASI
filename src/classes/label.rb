@@ -5,9 +5,9 @@ class Label < Object
   def initialize(window,player_id)
   	super(x =position(player_id,"x"),y =position(player_id, "y"),window,player_id)
     @z=3
-    @image_p=Gosu::Image.new(@game_window, "../data/graphics/Units/pikeman/pikeman_poster_1.png")
-    @image_s=Gosu::Image.new(@game_window, "../data/graphics/Units/swordsman/swordsman_poster_1.png")
-    @image_h=Gosu::Image.new(@game_window, "../data/graphics/Units/horseman/horseman_poster_1.png")
+    @image_p=Gosu::Image.new(@game_window, "../data/graphics/"+@player_id+"/Units/pikeman/pikeman_poster_1.png")
+    @image_s=Gosu::Image.new(@game_window, "../data/graphics/"+@player_id+"/Units/swordsman/swordsman_poster_1.png")
+    @image_h=Gosu::Image.new(@game_window, "../data/graphics/"+@player_id+"/Units/horseman/horseman_poster_1.png")
   end
   def draw
   	if orientation==1
