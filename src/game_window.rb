@@ -23,6 +23,7 @@ class GameWindow < Gosu::Window
     @engin=Engine.new(self)
     @left=Player.new(self,"left",@engin)
     @right=Player.new(self,"right",@engin)
+    @watch_out=false
 
     @balloons=Array.new
   end
@@ -57,6 +58,7 @@ class GameWindow < Gosu::Window
     @right.cooldown
 
     self.players_units_colision
+    self.units_and_walls_collision
 
 
   end
@@ -91,17 +93,49 @@ def players_units_colision
       @right.units.first.attack=true
       @left.units.first.attacking(@right.units.first.damage)
       @right.units.first.attacking(@left.units.first.damage)
+      @watch_out=true
     else
       @left.units.first.speed=@left.units.first.max_unit_speed
       @right.units.first.speed=@right.units.first.max_unit_speed
       @left.units.first.attack=false
       @right.units.first.attack=false
+      @watch_out=false
     end
   else
     @left.units.first.speed=@left.units.first.max_unit_speed if !@left.units.empty?
     @right.units.first.speed=@right.units.first.max_unit_speed if !@right.units.empty?
     @left.units.first.attack=false if !@left.units.empty?
     @right.units.first.attack=false if !@right.units.empty?
+    @watch_out=false
+  end
+end
+
+def units_and_walls_collision
+  if !@left.units.empty?&&!@right.walls.empty?
+    if Gosu::distance(@left.units.first.x,@left.units.first.y, @right.walls.last.x, @right.walls.last.y_down)<@left.units.first.radius+50
+      @left.units.first.speed=0
+      @left.units.first.attack=true
+      @right.walls.last.hit(@left.units.first.damage)
+    else
+      if !@watch_out
+        @left.units.first.speed=@left.units.first.max_unit_speed
+        @left.units.first.attack=false
+      end
+    end
+
+  end
+  if !@right.units.empty?&&!@left.walls.empty?
+    if Gosu::distance(@right.units.first.x,@right.units.first.y, @left.walls.last.x, @left.walls.last.y_down)<@right.units.first.radius+50
+      @right.units.first.speed=0
+      @right.units.first.attack=true
+      @left.walls.last.hit(@right.units.first.damage)
+    else
+      if !@watch_out
+        @right.units.first.speed=@right.units.first.max_unit_speed
+        @right.units.first.attack=false
+      end
+    end
+
   end
 end
 

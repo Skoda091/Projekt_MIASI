@@ -16,7 +16,7 @@ class Unit < Object
     @frame_time=6
     @cooldown_counter=@cooldown_time
     @attack_time=50
-    @attack_counter=@attack_time
+    @attack_counter=25
 
     @remove_unit=false
 
@@ -99,6 +99,7 @@ class Unit < Object
     end
   end
   def corpse
+    @z=1
     @image=@anim_die[@anim_die.size-1]
     # abort(@image.inspect)
   end
