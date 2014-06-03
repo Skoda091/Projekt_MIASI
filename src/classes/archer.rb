@@ -19,6 +19,11 @@ class Archer < Object
     @bow_shot_sound = Gosu::Sample.new(@game_window, "../data/sounds/"+player_id+"/cbow_04.wav")
     @reload_sound = Gosu::Sample.new(@game_window, "../data/sounds/"+player_id+"/cbowwind_01.wav")
  
+    if player_id=='left'
+    
+    else
+
+    end
 
 
     @arrows=Array.new
@@ -35,12 +40,19 @@ class Archer < Object
   def draw
     if @cooldown_counter > 0
        set_image @reload
+       @image.draw_rot(@x, @y, 1, 0,0.5,0.5, orientation )
     else
       @image=@img
-      @arm.draw_rot(@x-5*orientation, @y-15, 1, @angle-90,0,0.5,orientation)
+      if player_id=='left'
+        @image.draw_rot(@x, @y, 1, 0,0.5,0.5, orientation )
+        @arm.draw_rot(@x-10*orientation, @y-15, 1, @angle-90,0,0.5,orientation)
+      else
+        @arm.draw_rot(@x-5*orientation, @y-15, 1, @angle-90,0.4,0.5,orientation)
+        @image.draw_rot(@x, @y, 1, 0,0.5,0.5, orientation )
+      end
     end
      
-      @image.draw_rot(@x, @y, 1, 0,0.5,0.5, orientation )
+      
       
       @arrows.each {|x| x.draw}
   end

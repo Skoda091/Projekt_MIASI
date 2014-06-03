@@ -1,6 +1,7 @@
 require 'gosu'
 require_relative '../classes/archer.rb'
 require_relative '../classes/building.rb'
+require_relative '../classes/nexus.rb'
 require_relative '../classes/unit.rb'
 require_relative '../classes/label.rb'
 
@@ -13,6 +14,7 @@ class Player
     @cooldown=100.0
     @count=false
     @cooldown_decay=0.995
+    @nexus=Nexus.new(orientation=='left' ? 0 : window.res_x,engine.horizont_pos,@game_window,@orientation)
     @walls=Array.new
     @units=Array.new
     @label=Label.new(@game_window,@orientation)
@@ -41,11 +43,12 @@ class Player
 
 
   def draw
-    if @cooldown<100&&@cooldown>50
+    if @cooldown.between?(50,100) 
       @label.deny
     else
       @label.draw
     end
+    @nexus.draw
     @walls.each { |x| x.draw}
     unless @units.empty?
       @units.each { |u| u.draw}
