@@ -6,7 +6,7 @@ require_relative '../classes/unit.rb'
 require_relative '../classes/label.rb'
 
 class Player
-  attr_accessor :walls, :units, :corpse
+  attr_accessor :walls, :units, :corpse, :nexus
   def initialize (window,orientation,engine)
     @game_window=window
     @orientation=orientation

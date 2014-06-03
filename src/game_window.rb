@@ -64,6 +64,7 @@ class GameWindow < Gosu::Window
 
     self.players_units_colision
     self.units_and_walls_collision
+    self.units_and_nexus_collision
 
   end
 
@@ -141,6 +142,23 @@ def units_and_walls_collision
       end
     end
 
+  end
+end
+
+def units_and_nexus_collision
+  if !@left.units.empty?
+    if Gosu::distance(@left.units.first.x,@left.units.first.y, @right.nexus.x, @left.units.first.y)<@left.units.first.radius+70
+      @left.units.first.speed=0
+      @left.units.first.attack=true
+      @left.units.first.attacking_nexus
+    end
+  end
+  if !@right.units.empty?
+    if Gosu::distance(@right.units.first.x,@right.units.first.y, @left.nexus.x, @right.units.first.y)<@right.units.first.radius+70
+      @right.units.first.speed=0
+      @right.units.first.attack=true
+      @right.units.first.attacking_nexus
+    end
   end
 end
 

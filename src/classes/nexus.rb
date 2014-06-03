@@ -30,7 +30,7 @@ class Nexus < Object
     @hp=0 if @hp<0
     @image=@image_damaged if @hp/(@max_hp+0.0)<=0.5
     @collapsed=true unless @hp>0
-    show_hp_bar(-10, 0)
+    show_hp_bar(100, 10)
   end
 
   def dead?

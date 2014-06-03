@@ -102,6 +102,19 @@ class Unit < Object
 
   end
 
+  def attacking_nexus
+    if @image==@anim_attack[@frame_attack]
+      if @change_frame==false
+        @game_window.right.nexus.hit(@damage) if @player_id=="left"
+        @game_window.left.nexus.hit(@damage) if @player_id=="right"
+        @change_frame=true
+      end
+    else
+      @change_frame=false
+    end
+
+  end
+
   def hit(damage)
     unless @is_dead
       @hp-=damage
