@@ -44,9 +44,7 @@ class Unit < Object
 
         if @speed==0
           #@image=@anim_move[0]
-          set_image @anim_stand
-          @cooldown_counter-=1
-          @cooldown_counter=@cooldown_time unless @cooldown_counter>0
+          set_image @anim_stand 
         end
       else
         set_image @anim_attack
