@@ -110,13 +110,13 @@ end
 
 def units_and_walls_collision
   if !@left.units.empty?&&!@right.walls.empty?
-    if Gosu::distance(@left.units.first.x,@left.units.first.y, @right.walls.last.x, @right.walls.last.y_down)<@left.units.first.radius+50
+    if Gosu::distance(@left.units.first.x,@left.units.first.y, @right.walls.last.x, @right.walls.last.y_down)<@left.units.first.radius+50#&&!@right.walls.last.collapsed
       @left.units.first.speed=0
       @left.units.first.attack=true
-      @right.walls.last.hit(@left.units.first.damage)
+      @left.units.first.attacking_walls
     else
       if !@watch_out
-        @left.units.first.speed=@left.units.first.max_unit_speed
+        @left.units.first.speed=@left.units.first.max_unit_speed #if @right.walls.last.collapsed
         @left.units.first.attack=false
       end
     end
@@ -126,7 +126,7 @@ def units_and_walls_collision
     if Gosu::distance(@right.units.first.x,@right.units.first.y, @left.walls.last.x, @left.walls.last.y_down)<@right.units.first.radius+50
       @right.units.first.speed=0
       @right.units.first.attack=true
-      @left.walls.last.hit(@right.units.first.damage)
+      @right.units.first.attacking_walls
     else
       if !@watch_out
         @right.units.first.speed=@right.units.first.max_unit_speed

@@ -2,7 +2,7 @@ require 'gosu'
 require_relative '../classes/object.rb'
 
 class Building < Object
-  attr_accessor :bow,:y_down
+  attr_accessor :bow,:y_down, :collapsed
   def initialize(x,y,window,player_id,height)
     super(x =x,y =y,window,player_id)
     @image_normal=Gosu::Image.new(@game_window, "../data/graphics/"+player_id+"/Buildings/wall.png")

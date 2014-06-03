@@ -17,17 +17,19 @@ class Unit < Object
     @cooldown_counter=@cooldown_time
     @attack_time=50
     @attack_counter=25
-
+    @frame_attack
     @remove_unit=false
 
     @buff=0
     init(@type)
+    @change_frame=false
 
   end
 
   def draw()
+
       @image.draw_rot(@x, @y, @z, 0, 0.2, 1, orientation, 1) and @previous_image=@image unless @image.nil?
-      @previous_image.draw_rot(@x, @y, @z, 0, 0.2, 1, orientation, 1) if @image.nil? and !@previous_image.nil?
+      #@previous_image.draw_rot(@x, @y, @z, 0, 0.2, 1, orientation, 1) if @image.nil? and !@previous_image.nil?
 
     if @is_dead==false then
 
@@ -41,7 +43,10 @@ class Unit < Object
         @cooldown_counter=@cooldown_time unless @cooldown_counter>0
 
         if @speed==0
-          @image=@anim_move[0]
+          #@image=@anim_move[0]
+          set_image @anim_stand
+          @cooldown_counter-=1
+          @cooldown_counter=@cooldown_time unless @cooldown_counter>0
         end
       else
         set_image @anim_attack
@@ -57,7 +62,6 @@ class Unit < Object
     end
 
     super
-
   end
 
   def die
@@ -87,6 +91,19 @@ class Unit < Object
     @attack_counter-=1
   end
 
+  def attacking_walls
+    if @image==@anim_attack[@frame_attack]
+      if @change_frame==false
+        @game_window.right.walls.last.hit(@damage) if @player_id=="left"
+        @game_window.left.walls.last.hit(@damage) if @player_id=="right"
+        @change_frame=true
+      end
+    else
+      @change_frame=false
+    end
+
+  end
+
   def hit(damage)
     unless @is_dead
       @hp-=damage
@@ -113,9 +130,12 @@ class Unit < Object
       @max_unit_speed=@speed
       @anim_move=load_sprites("../data/graphics/"+@player_id+"/Units/swordsman/walk")
       @anim_attack=load_sprites("../data/graphics/"+@player_id+"/Units/swordsman/attack")
+      @anim_stand=load_sprites("../data/graphics/"+@player_id+"/Units/swordsman/stand")
       @recruit_swordsman.play
       @cost=100
       @radius=25
+      @frame_attack=3 if @player_id=="left"
+      @frame_attack=2 if @player_id=="right"
     end
     if type=='pikeman'
       @recruit_pikeman=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/recruit_pikeman.wav")
@@ -125,9 +145,12 @@ class Unit < Object
       @max_unit_speed=@speed
       @anim_move=load_sprites("../data/graphics/"+@player_id+"/Units/pikeman/walk")
       @anim_attack=load_sprites("../data/graphics/"+@player_id+"/Units/pikeman/attack")
+      @anim_stand=load_sprites("../data/graphics/"+@player_id+"/Units/pikeman/stand")
       @recruit_pikeman.play
       @cost=100
       @radius=30
+      @frame_attack=5 if @player_id=="left"
+      @frame_attack=3 if @player_id=="right"
     end
     if type=='horseman'
       @recruit_horseman=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/recruit_horseman.wav")
@@ -137,9 +160,12 @@ class Unit < Object
       @max_unit_speed=@speed
       @anim_move=load_sprites("../data/graphics/"+@player_id+"/Units/horseman/walk")
       @anim_attack=load_sprites("../data/graphics/"+@player_id+"/Units/horseman/attack")
+      @anim_stand=load_sprites("../data/graphics/"+@player_id+"/Units/horseman/stand")
       @recruit_horseman.play
       @cost=100
       @radius=55
+      @frame_attack=6 if @player_id=="left"
+      @frame_attack=4 if @player_id=="right"
     end
       @cooldown_time=@frame_time*@anim_move.size
       @hp=@max_hp
