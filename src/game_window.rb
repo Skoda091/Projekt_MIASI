@@ -49,7 +49,6 @@ class GameWindow < Gosu::Window
     @left.collision
     @right.collision
 
-
     @left.units.each {|u| u.move}
     @right.units.each {|u| u.move}
     @left.walls.each { |x| x.bow.arrows_fly}
@@ -59,7 +58,6 @@ class GameWindow < Gosu::Window
 
     self.players_units_colision
     self.units_and_walls_collision
-
 
   end
 
