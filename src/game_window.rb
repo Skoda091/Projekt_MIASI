@@ -1,13 +1,13 @@
 require 'gosu'
 
 load '../src/classes/unit.rb'
-load '../src/classes/balloon.rb'
+load '../src/classes/bird.rb'
 
 require_relative '../src/classes/player.rb'
 require_relative '../src/classes/engine.rb'
 
 class GameWindow < Gosu::Window
-  attr_accessor :left,:right,:res_x,:res_y,:balloons
+  attr_accessor :left,:right,:res_x,:res_y,:birds,:engin
   def initialize
 
     @z=0
@@ -25,13 +25,19 @@ class GameWindow < Gosu::Window
     @right=Player.new(self,"right",@engin)
     @watch_out=false
 
-    @balloons=Array.new
+    @birds=Array.new
+    @birds_corpse=Array.new
   end
 
   def update
-    @balloons << Balloon.new(self,"left") if rand((@balloons.count+1)*160)==0
-    @balloons.reject! {|b| b.dead? }
-    @balloons.each { |e| e.move}
+    @birds << Bird.new(self,"left") if rand((@birds.count+1)*160)==0
+    @birds.each { |e|  @birds_corpse << e if e.dead? }
+    @birds_corpse.reject! {|e| e.dead?}
+
+
+    @birds.each { |e| e.move}
+    @birds_corpse.each { |e| e.move}
+
     @left.walls.reject! { |e| e.dead? }
     @right.walls.reject! { |e| e.dead? }
 
@@ -72,7 +78,8 @@ class GameWindow < Gosu::Window
     @right.draw
 
 
-    @balloons.each { |e| e.draw}
+    @birds.each { |e| e.draw}
+    @birds_corpse.each { |e| e.draw}
   end
 
 
