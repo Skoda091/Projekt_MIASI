@@ -7,6 +7,7 @@ class Building < Object
     super(x =x,y =y,window,player_id)
     @image_normal=Gosu::Image.new(@game_window, "../data/graphics/"+player_id+"/Buildings/wall.png")
     @image_blank=Gosu::Image.new(@game_window, "../data/graphics/"+player_id+"/Buildings/wall_blank.png")
+    @collapse_sound=Gosu::Sample.new(@game_window, "../data/sounds/wall_collapse.wav")
     @z=1
     @height=height
     @y_down=@y
@@ -40,6 +41,7 @@ class Building < Object
 
       unless @dead_time>0
         @dead=true
+        @collapse_sound.play
       end
     end
     return @dead
