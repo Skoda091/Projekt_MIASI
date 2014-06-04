@@ -23,6 +23,8 @@ class Bird < Object
        @dead_time=42
        @dead_counter=@dead_time
        @angle=0
+       @rotate=0
+       @energy=0
     end
 
   def move
@@ -34,7 +36,7 @@ class Bird < Object
       @vel_y+=0.18
       
       
-      @y+=@vel_y and @angle+= @rotate and @arrow.set_angle (@arrow.angle+@rotate)if @y<@game_window.engin.horizont_pos+30
+      @y+=@vel_y and @angle+= @rotate and @arrow.set_angle (@arrow.angle+@rotate)if @y<@game_window.engin.horizont_pos+30 and !@arrow.nil?
       
 
     else

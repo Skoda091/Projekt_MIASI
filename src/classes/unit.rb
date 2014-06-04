@@ -24,6 +24,8 @@ class Unit < Object
     init(@type)
     @change_frame=false
 
+    @arrow_hit=Gosu::Sample.new(@game_window, "../data/sounds/"+player_id+"/arrow_hit.wav")
+
   end
 
   def draw()
@@ -122,7 +124,7 @@ class Unit < Object
         @hp=0
         die
       end
-
+      @arrow_hit.play
       show_hp_bar 60,25
     end
   end
