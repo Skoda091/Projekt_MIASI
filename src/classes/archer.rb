@@ -75,8 +75,13 @@ class Archer < Object
     orientation==1 ? ar.warp(angle+180) : ar.warp(angle)
     @arrows.push(ar)
     @cooldown_counter=@cooldown_time
-    @bow_shot_sound.play
-    @reload_sound.play
+    if @player_id=='left'
+      @bow_shot_sound.play(0.5)
+      @reload_sound.play
+    else
+      @bow_shot_sound.play(0.4)
+      @reload_sound.play(0.3)
+    end
     end
   end
 

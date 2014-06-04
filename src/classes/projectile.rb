@@ -11,7 +11,7 @@ class Projectile < Object
     @arrow_hit_ground=Gosu::Sample.new(@game_window, "../data/sounds/"+player_id+"/arrow_hit_ground.wav")
     @arrow_hit_wall=Gosu::Sample.new(@game_window, "../data/sounds/"+player_id+"/arrow_hit_wall.wav")
     
-    @arrow_fly=Gosu::Sample.new(@game_window, "../data/sounds/"+player_id+"/arrow_fly.wav")
+    # @arrow_fly=Gosu::Sample.new(@game_window, "../data/sounds/"+player_id+"/arrow_fly.wav")
     
     @image=Gosu::Image.new(@game_window, "../data/graphics/"+player_id+"/Units/Archer/projectile.png")
     @in_air=true
@@ -19,6 +19,7 @@ class Projectile < Object
     @weight=1
     @angle=0
 
+    @z=6
     @scx=0.5
     @scy=0.5
   end
@@ -33,20 +34,21 @@ def warp (angle)
   @hit=false
 end
   def move
+    @arrow_above_hor=10
     @ttl-=2 #czas zycia pocisku
 
     # @arrow_fly.play if @y.between?(@game_window.engine.horizont_pos-240,@game_window.engine.horizont_pos-230)
-    if @y>@game_window.engine.horizont_pos+40 and @in_air then # czy pocisk w powietrzu
+    if @y>@game_window.engine.horizont_pos+ (@colide==true ? @arrow_above_hor : 40) and @in_air then # czy pocisk w powietrzu
       @in_air=false
-      @arrow_hit_ground.play
+      @player_id=='left' ? @arrow_hit_ground.play : @arrow_hit_ground.play(0.6)
     end
 
     if @in_air
       unless @broken
         if @player_id=='left'
-          @colide=true and @vel_x1=@vel_x and @vel_y1=@vel_y if Gosu::distance(@x,@y, @game_window.right.walls[1].x,@game_window.right.walls[2].y)<380.0
+          @colide=true and @vel_x1=@vel_x and @vel_y1=@vel_y if Gosu::distance(@x,@y, @game_window.right.walls[1].x,@game_window.right.walls[1].y)<220.0
         else
-          @colide=true and @vel_y1=@vel_y and @vel_x1=@vel_x if Gosu::distance(@x,@y, @game_window.left.walls[1].x,@game_window.left.walls[2].y)<380.0
+          @colide=true and @vel_y1=@vel_y and @vel_x1=@vel_x if Gosu::distance(@x,@y, @game_window.left.walls[1].x,@game_window.left.walls[1].y)<220.0
         end
         @game_window.right.units.each { |unit|  if Gosu::distance(@x,@y, unit.x,unit.y)<unit.radius  then  unit.hit(@energy)  and return true end}
         @game_window.left.units.each { |unit|  if Gosu::distance(@x,@y, unit.x,unit.y)<unit.radius  then  unit.hit(@energy)  and return true end}
@@ -57,18 +59,17 @@ end
       if @colide
         # @arrow_hit_wall.play
         if @player_id=='left'
-          dist = Gosu::distance(@x,@y, @game_window.right.walls[2].x,@game_window.right.walls[2].y)
+          dist = Gosu::distance(@x,@y, @game_window.right.walls[1].x,@game_window.right.walls[1].y)
           ang=Gosu::angle(0,0,@vel_x1,@vel_y1)
         else
-          dist = Gosu::distance(@x,@y, @game_window.left.walls[2].x,@game_window.left.walls[2].y)
+          dist = Gosu::distance(@x,@y, @game_window.left.walls[1].x,@game_window.left.walls[1].y)
           ang=-Gosu::angle(0,0,@vel_x1,@vel_y1)
         end
 
-        # @vel_x*=dist/450.0
+        @z=0.5
+        @vel_x*=dist/180.0
         
-        if ang<85
-          @vel_y-=@g+330*5/dist
-        end
+        
         # @colide=false
         @broken=true
       end
@@ -91,7 +92,7 @@ end
   end
 
   def draw
-    @image.draw_rot(@x, @y, 6, @angle,@scx,@scy)
+    @image.draw_rot(@x, @y, @z, @angle,@scx,@scy)
   end
 
   def set_angle ang

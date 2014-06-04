@@ -9,7 +9,8 @@ require_relative '../src/classes/engine.rb'
 class GameWindow < Gosu::Window
   attr_accessor :left,:right,:res_x,:res_y,:birds,:engin
   def initialize
-
+    @background_sound=Gosu::Sample.new(self, "../data/sounds/birds_loop.wav")
+    @background_sound.play(1,1,1)
     @z=0
     @res_x,@res_y=1920,1080
     super @res_x, @res_y, true

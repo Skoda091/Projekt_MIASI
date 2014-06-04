@@ -13,7 +13,7 @@ class Bird < Object
 
        @image=@fly_anim[0]
 
-       @boom_sound=Gosu::Sample.new(@game_window, "../data/sounds/balloon.wav")
+       @boom_sound=Gosu::Sample.new(@game_window, "../data/sounds/bird_die.wav")
        @vel_x=1.5
        @vel_y=0.0
 
@@ -77,7 +77,7 @@ class Bird < Object
       @vel_y=0
       @cooldown_time=@dead_time
       @cooldown_counter=@dead_time
-      @boom_sound.play
+      @boom_sound.play(1.5)
       @died=true
     end
   end
