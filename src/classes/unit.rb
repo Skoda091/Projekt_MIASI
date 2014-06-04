@@ -68,6 +68,7 @@ class Unit < Object
     @is_dead=true
     @cooldown_time=50
     @cooldown_counter=@cooldown_time
+    @die_sound.play
     @anim_die=load_sprites("../data/graphics/"+@player_id+"/Units/"+@type+"/die")
   end
 
@@ -85,6 +86,7 @@ class Unit < Object
 
   def attacking(damage)
     if @attack_counter<=0
+      @attack_sound.play
       @attack_counter=@attack_time
       hit(damage)
     end
@@ -94,6 +96,7 @@ class Unit < Object
   def attacking_walls
     if @image==@anim_attack[@frame_attack]
       if @change_frame==false
+        @attack_sound.play
         @game_window.right.walls.last.hit(@damage) if @player_id=="left"
         @game_window.left.walls.last.hit(@damage) if @player_id=="right"
         @change_frame=true
@@ -107,6 +110,7 @@ class Unit < Object
   def attacking_nexus
     if @image==@anim_attack[@frame_attack]
       if @change_frame==false
+        @attack_sound.play
         @game_window.right.nexus.hit(@damage) if @player_id=="left"
         @game_window.left.nexus.hit(@damage) if @player_id=="right"
         @change_frame=true
@@ -137,6 +141,8 @@ class Unit < Object
   def init(type)
     if type=='swordsman'
       @recruit_swordsman=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/recruit_swordsman.wav")
+      @die_sound=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/Units/swordsman/die.wav")
+      @attack_sound=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/Units/swordsman/attack.wav")
       @max_hp=350
       @damage=100
       @speed=1.5
@@ -152,6 +158,8 @@ class Unit < Object
     end
     if type=='pikeman'
       @recruit_pikeman=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/recruit_pikeman.wav")
+      @die_sound=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/Units/pikeman/die.wav")
+      @attack_sound=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/Units/pikeman/attack.wav")
       @max_hp=300
       @damage=80
       @speed=1
@@ -167,6 +175,8 @@ class Unit < Object
     end
     if type=='horseman'
       @recruit_horseman=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/recruit_horseman.wav")
+      @die_sound=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/Units/horseman/die.wav")
+      @attack_sound=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/Units/horseman/attack.wav")
       @max_hp=400
       @damage=150
       @speed=2
