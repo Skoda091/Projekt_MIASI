@@ -50,8 +50,9 @@ end
         else
           @colide=true and @vel_y1=@vel_y and @vel_x1=@vel_x if Gosu::distance(@x,@y, @game_window.left.walls[1].x,@game_window.left.walls[1].y)<220.0
         end
-        @game_window.right.units.each { |unit|  if Gosu::distance(@x,@y, unit.x,unit.y)<unit.radius  then  unit.hit(@energy,true)  and return true end}
-        @game_window.left.units.each { |unit|  if Gosu::distance(@x,@y, unit.x,unit.y)<unit.radius  then  unit.hit(@energy,true)  and return true end}
+        
+        @game_window.right.units.each { |unit|  if Gosu::distance(@x,@y, unit.x,unit.y)<unit.radius  then  unit.player_id==player_id ? unit.arrow_hit_friendly.play : unit.arrow_hit.play and unit.hit(@energy)  and return true end}
+        @game_window.left.units.each { |unit|   if Gosu::distance(@x,@y, unit.x,unit.y)<unit.radius  then  unit.player_id==player_id ? unit.arrow_hit_friendly.play : unit.arrow_hit.play and unit.hit(@energy)  and return true end}
 
         @game_window.birds.each { |e| if Gosu::distance(@x, @y, e.x,e.y)<30.0 then e.arrow=self and e.hit(@energy)  and return true end}
       end
@@ -62,13 +63,15 @@ end
         if @player_id=='left'
           dist = Gosu::distance(@x,@y, @game_window.right.walls[1].x,@game_window.right.walls[1].y) unless @game_window.right.walls[1].nil?
           ang=Gosu::angle(0,0,@vel_x1,@vel_y1)
+          @vel_x*=dist.abs/180.0 if @x<@game_window.right.walls[1].x and !@game_window.right.walls[1].nil?
         else
           dist = Gosu::distance(@x,@y, @game_window.left.walls[1].x,@game_window.left.walls[1].y) unless @game_window.left.walls[1].nil?
           ang=-Gosu::angle(0,0,@vel_x1,@vel_y1)
+          @vel_x*=dist.abs/180.0 if @x>@game_window.left.walls[1].x and !@game_window.left.walls[1].nil?
         end
 
         @z=0.5
-        @vel_x*=dist/180.0
+        
         
         
         # @colide=false

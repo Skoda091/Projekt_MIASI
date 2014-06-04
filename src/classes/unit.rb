@@ -2,7 +2,7 @@ require 'gosu'
 load '../src/classes/object.rb'
 
 class Unit < Object
-  attr_accessor :remove_unit, :speed, :max_unit_speed, :radius, :attack, :damage, :cost
+  attr_accessor :arrow_hit, :arrow_hit_friendly, :remove_unit, :speed, :max_unit_speed, :radius, :attack, :damage, :cost
   def initialize(x,y,window,player_id,type)
     super(x,y,window,player_id)
     @cost,@speed=0
@@ -25,7 +25,7 @@ class Unit < Object
     @change_frame=false
 
     @arrow_hit=Gosu::Sample.new(@game_window, "../data/sounds/"+player_id+"/arrow_hit.wav")
-
+    @arrow_hit_friendly=Gosu::Sample.new(@game_window, "../data/sounds/"+ (player_id=='left' ? 'right': 'left') +"/arrow_hit.wav")
   end
 
   def draw()
@@ -123,14 +123,13 @@ class Unit < Object
 
   end
 
-  def hit(damage,bow=false)
+  def hit(damage)
     unless @is_dead
       @hp-=damage
       unless @hp>0
         @hp=0
         die
       end
-      @arrow_hit.play if bow
       show_hp_bar 60,25
     end
   end
@@ -188,7 +187,7 @@ class Unit < Object
       @anim_stand=load_sprites("../data/graphics/"+@player_id+"/Units/horseman/stand")
       @recruit_horseman.play
       @cost=500
-      @radius=55
+      @radius=65
       @frame_attack=6 if @player_id=="left"
       @frame_attack=4 if @player_id=="right"
     end

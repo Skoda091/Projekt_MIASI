@@ -17,7 +17,7 @@ class Nexus < Object
     @y-=@image_nexus.height*@scale/3-10
     @z=6
     
-    @max_hp=100
+    @max_hp=10000
     @hp=@max_hp
     @dead=false
     @collapsed=false
