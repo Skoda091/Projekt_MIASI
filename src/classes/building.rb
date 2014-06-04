@@ -53,8 +53,9 @@ class Building < Object
       @cooldown_counter-=1
       set_image @collapse_anim
       unless @cooldown_counter>0
+        @collapse_sound.play if @dead=false
         @dead=true
-        @collapse_sound.play
+        
       end
     end
     return @dead
