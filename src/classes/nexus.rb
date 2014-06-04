@@ -54,8 +54,9 @@ class Nexus < Object
     @cooldown_counter-=1
 
       unless @cooldown_counter>0
+        @collapse_sound.play if !@dead
         @dead=true
-        @collapse_sound.play
+        
       end
     end
     return @dead

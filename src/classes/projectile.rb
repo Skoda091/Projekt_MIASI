@@ -58,11 +58,12 @@ end
 
       if @colide
         # @arrow_hit_wall.play
+        dist=180
         if @player_id=='left'
-          dist = Gosu::distance(@x,@y, @game_window.right.walls[1].x,@game_window.right.walls[1].y)
+          dist = Gosu::distance(@x,@y, @game_window.right.walls[1].x,@game_window.right.walls[1].y) unless @game_window.right.walls[1].nil?
           ang=Gosu::angle(0,0,@vel_x1,@vel_y1)
         else
-          dist = Gosu::distance(@x,@y, @game_window.left.walls[1].x,@game_window.left.walls[1].y)
+          dist = Gosu::distance(@x,@y, @game_window.left.walls[1].x,@game_window.left.walls[1].y) unless @game_window.left.walls[1].nil?
           ang=-Gosu::angle(0,0,@vel_x1,@vel_y1)
         end
 
