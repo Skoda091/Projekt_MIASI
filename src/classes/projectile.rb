@@ -4,7 +4,7 @@ require_relative '../classes/object.rb'
 require_relative '../classes/engine.rb'
 
 class Projectile < Object
-  attr_accessor :ttl,:base_angle, :angle, :scx, :scy
+  attr_accessor :ttl,:base_angle, :angle, :scx, :scy, :vel_x, :vel_y
   def initialize (x,y,window,player_id)
 
     super

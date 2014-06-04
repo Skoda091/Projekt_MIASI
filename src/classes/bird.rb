@@ -5,7 +5,7 @@ class Bird < Object
   attr_accessor :arrow
   def initialize(window,player_id)
       orient=rand(2)
-       super(orient==0 ? 0 : window.res_x,rand(window.res_y-630)+30,window,orient==0 ? 'left' : 'right')
+       super(orient==0 ? 0 : window.res_x,rand(window.res_y-560)+100,window,orient==0 ? 'left' : 'right')
        
        @fly_anim = load_sprites("../data/graphics/Bird/fly")
        @die_anim = load_sprites("../data/graphics/Bird/die")
@@ -34,16 +34,16 @@ class Bird < Object
       # abort(@vel_y.inspect)
       
       @vel_y+=0.18
+      @rotate*=0.98
       
-      
-      @y+=@vel_y and @angle+= @rotate and @arrow.set_angle (@arrow.angle+@rotate)if @y<@game_window.engin.horizont_pos+30 and !@arrow.nil?
+      @x+=@vel_x and @y+=@vel_y and @angle+= @rotate and @arrow.set_angle (@arrow.angle+@rotate)if @y<@game_window.engin.horizont_pos+30 and !@arrow.nil?
       
 
     else
       r=(rand(21)-10)/50.0
       @vel_y+=r if (@vel_y+r).between?(-1.0,1.0)
       @x+=@vel_x*orientation
-      @y+=@vel_y if (@y+@vel_y).between?(0,500)
+      @y+=@vel_y if (@y+@vel_y).between?(90,500)
 
       @ttl=-0 unless @x.between?(-20,@game_window.res_x+21)
 
@@ -72,9 +72,8 @@ class Bird < Object
   def hit dmg
     unless @died
       @energy=dmg
-      @arrow.nil? ? @rotate=0 : @arrow.scy=0 and @rotate=@energy/55 * (@arrow.player_id=='left' ? 1 : -1)
-      @vel_x=0
-      @vel_y=0
+      @arrow.nil? ? (@rotate=0 and @vel_x=0 and @vel_y=0) : @arrow.player_id=='left' ? @game_window.left.gold+=50 : @game_window.right.gold+=50 and @rotate=rand(21)-10 and @arrow.scy=0  and (@vel_x=@arrow.vel_x/3 and @vel_y=-@arrow.vel_y/2)
+      
       @cooldown_time=@dead_time
       @cooldown_counter=@dead_time
       @boom_sound.play(1.5)
