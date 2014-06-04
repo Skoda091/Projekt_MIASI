@@ -28,7 +28,7 @@ class Player
 
     @cooldown_sample=0
     @cooldown_sample_time=100
-    @cant_recruit=Gosu::Sample.new(@game_window, "../data/sounds/Taxes_rate6.wav")
+    @cant_recruit=Gosu::Sample.new(@game_window, "../data/sounds/d.wav")
 
 
     if @orientation=="left"
