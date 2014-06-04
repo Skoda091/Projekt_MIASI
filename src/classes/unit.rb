@@ -153,7 +153,7 @@ class Unit < Object
       @anim_stand=load_sprites("../data/graphics/"+@player_id+"/Units/swordsman/stand")
       @recruit_swordsman.play
       @cost=300
-      @radius=25
+      @radius=65
       @frame_attack=3 if @player_id=="left"
       @frame_attack=2 if @player_id=="right"
     end
@@ -170,7 +170,7 @@ class Unit < Object
       @anim_stand=load_sprites("../data/graphics/"+@player_id+"/Units/pikeman/stand")
       @recruit_pikeman.play
       @cost=100
-      @radius=30
+      @radius=55
       @frame_attack=5 if @player_id=="left"
       @frame_attack=3 if @player_id=="right"
     end
@@ -180,14 +180,14 @@ class Unit < Object
       @attack_sound=Gosu::Sample.new(@game_window, "../data/sounds/"+@player_id+"/Units/horseman/attack.wav")
       @max_hp=400
       @damage=150
-      @speed=2
+      @speed=2.5
       @max_unit_speed=@speed
       @anim_move=load_sprites("../data/graphics/"+@player_id+"/Units/horseman/walk")
       @anim_attack=load_sprites("../data/graphics/"+@player_id+"/Units/horseman/attack")
       @anim_stand=load_sprites("../data/graphics/"+@player_id+"/Units/horseman/stand")
       @recruit_horseman.play
       @cost=500
-      @radius=65
+      @radius=75
       @frame_attack=6 if @player_id=="left"
       @frame_attack=4 if @player_id=="right"
     end

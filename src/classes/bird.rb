@@ -72,7 +72,7 @@ class Bird < Object
   def hit dmg
     unless @died
       @energy=dmg
-      @arrow.nil? ? (@rotate=0 and @vel_x=0 and @vel_y=0) : @arrow.player_id=='left' ? @game_window.left.gold+=50 : @game_window.right.gold+=50 and @rotate=rand(21)-10 and @arrow.scy=0  and (@vel_x=@arrow.vel_x/3 and @vel_y=-@arrow.vel_y/2)
+      @arrow.nil? ? (@rotate=0 and @vel_x=0 and @vel_y=0) : @arrow.player_id=='left' ? @game_window.left.gold+=100 : @game_window.right.gold+=100 and @rotate=rand(21)-10 and @arrow.scy=0  and (@vel_x=@arrow.vel_x/3 and @vel_y=-@arrow.vel_y/2)
       
       @cooldown_time=@dead_time
       @cooldown_counter=@dead_time

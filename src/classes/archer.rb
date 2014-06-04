@@ -58,6 +58,8 @@ class Archer < Object
   end
 
   def angle_change (direction)
+      if @cooldown_counter==0
+
         angle_delta=2
         @player_id=='left' ? delta=angle_delta : delta=angle_delta/2.0
 
@@ -66,7 +68,7 @@ class Archer < Object
         else
           @angle-=delta if @angle-delta>20
         end
-   
+    end
   end
 
   def shoot

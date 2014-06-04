@@ -33,7 +33,7 @@ class GameWindow < Gosu::Window
   end
 
   def update
-    @birds << Bird.new(self,"left") if rand((@birds.count+1)*160)==0
+    @birds << Bird.new(self,"left") if rand(200)==0
     @birds.each { |e|  @birds_corpse << e if e.dead? }
     @birds_corpse.reject! {|e| e.dead?}
 

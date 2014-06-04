@@ -16,7 +16,7 @@ class Projectile < Object
     @image=Gosu::Image.new(@game_window, "../data/graphics/"+player_id+"/Units/Archer/projectile.png")
     @in_air=true
     @energy=0.0
-    @weight=1
+    @weight=0.4
     @angle=0
 
     @z=6
@@ -25,7 +25,7 @@ class Projectile < Object
   end
 def warp (angle)
   @base_angle=-angle
-  @vel=20
+  @vel=16
   @vel_x,@vel_y=Gosu::offset_x(@base_angle,@vel),Gosu::offset_y(@base_angle,@vel)
   @g=0.18
   @ttl=1000
@@ -46,9 +46,9 @@ end
     if @in_air
       unless @broken
         if @player_id=='left'
-          @colide=true and @vel_x1=@vel_x and @vel_y1=@vel_y if Gosu::distance(@x,@y, @game_window.right.walls[1].x,@game_window.right.walls[1].y)<220.0
+          @colide=true and @vel_x1=@vel_x and @vel_y1=@vel_y if Gosu::distance(@x,@y, @game_window.right.walls[1].x,@game_window.right.walls[1].y)<150.0
         else
-          @colide=true and @vel_y1=@vel_y and @vel_x1=@vel_x if Gosu::distance(@x,@y, @game_window.left.walls[1].x,@game_window.left.walls[1].y)<220.0
+          @colide=true and @vel_y1=@vel_y and @vel_x1=@vel_x if Gosu::distance(@x,@y, @game_window.left.walls[1].x,@game_window.left.walls[1].y)<150.0
         end
         
         @game_window.right.units.each { |unit|  if Gosu::distance(@x,@y, unit.x,unit.y)<unit.radius  then  unit.player_id==player_id ? unit.arrow_hit_friendly.play : unit.arrow_hit.play and unit.hit(@energy)  and return true end}
