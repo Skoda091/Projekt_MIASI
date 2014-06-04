@@ -68,6 +68,8 @@ class Unit < Object
     @is_dead=true
     @cooldown_time=50
     @cooldown_counter=@cooldown_time
+    @game_window.left.gold+=@cost/2 if player_id=="right"
+    @game_window.right.gold+=@cost/2 if player_id=="left"
     @die_sound.play
     @anim_die=load_sprites("../data/graphics/"+@player_id+"/Units/"+@type+"/die")
   end

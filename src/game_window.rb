@@ -20,6 +20,8 @@ class GameWindow < Gosu::Window
     self.caption = "Gladius"
     @background_sky = Gosu::Image.new(self, "../data/graphics/Background/sky.png", false)
     @background_ground = Gosu::Image.new(self, "../data/graphics/Background/grass1.jpg", false)
+    @congratulations=Gosu::Font.new(self, "winner", 100)
+
     
     @engin=Engine.new(self)
     @left=Player.new(self,"left",@engin)
@@ -34,7 +36,6 @@ class GameWindow < Gosu::Window
     @birds << Bird.new(self,"left") if rand((@birds.count+1)*160)==0
     @birds.each { |e|  @birds_corpse << e if e.dead? }
     @birds_corpse.reject! {|e| e.dead?}
-
 
     @birds.each { |e| e.move}
     @birds_corpse.each { |e| e.move}
@@ -66,22 +67,19 @@ class GameWindow < Gosu::Window
     self.players_units_colision
     self.units_and_walls_collision
     self.units_and_nexus_collision
-
   end
 
   def draw
-
     @background_sky.draw(0, 0, 0,@res_x/@background_sky.width,@res_y-100.0/@background_sky.height)
     @background_ground.draw(0,@res_y-100,0,@res_x/@background_ground.width,100.0/@background_ground.height)
-
-    
 
     @left.draw
     @right.draw
 
-
     @birds.each { |e| e.draw}
     @birds_corpse.each { |e| e.draw}
+
+    self.win
   end
 
 
@@ -164,10 +162,11 @@ def units_and_nexus_collision
 end
 
 def win
-  if @left.nexus.hp<=0
-    
+  if @left.nexus.dead?
+    @congratulations.draw("Zwyciestwo prawego gracza!!!",400, 500, 4, 0.5, 0.5)
   end
-  if @right.nexus.hp<=0
+  if @right.nexus.dead?
+    @congratulations.draw("Zwyciestwo prawego lewego!!!",400, 500, 4, 0.5, 0.5) 
   end
 end
 
