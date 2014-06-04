@@ -22,6 +22,9 @@ class Player
     @label.draw(@gold)
     @corpse=Array.new
 
+    @pikeman_cost=100
+    @swordsman_cost=300
+    @horseman_cost=500
 
     if @orientation=="left"
       for i in 0..2
@@ -58,10 +61,28 @@ class Player
   end
 
   def recruit (x, y, player, unit)
-    if @cooldown==100
-      @count=true
-      tmp=Unit.new(x,y,@game_window,player,unit)
-      @units.push(tmp)
+      if @cooldown==100&&self.can_recruit?(unit)
+        @count=true
+        tmp=Unit.new(x,y,@game_window,player,unit)
+        @units.push(tmp)
+      end
+  end
+
+  def can_recruit?(unit)
+    @tmp_cost=0
+    case unit
+      when "swordsman"
+        @tmp_cost=@swordsman_cost
+      when "pikeman"
+        @tmp_cost=@pikeman_cost
+      when "horseman"
+        @tmp_cost=@horseman_cost
+      end
+    if @gold>=@tmp_cost
+      @gold-=@tmp_cost
+      return true
+    else
+      return false
     end
   end
 
