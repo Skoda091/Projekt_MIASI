@@ -163,10 +163,10 @@ end
 
 def win
   if @left.nexus.dead?
-    @congratulations.draw("Zwyciestwo prawego gracza!!!",400, 500, 4, 0.5, 0.5)
+    @congratulations.draw("Zwyciestwo gracza!!!",500, 500, 4, 0.5, 0.5)
   end
   if @right.nexus.dead?
-    @congratulations.draw("Zwyciestwo prawego lewego!!!",400, 500, 4, 0.5, 0.5) 
+    @congratulations.draw("Zwyciestwo lewego!!!",500, 500, 4, 0.5, 0.5) 
   end
 end
 
