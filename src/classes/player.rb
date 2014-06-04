@@ -20,6 +20,7 @@ class Player
     @label=Label.new(@game_window,@orientation)
     @label.draw
     @corpse=Array.new
+    @gold=1000
 
 
     if @orientation=="left"

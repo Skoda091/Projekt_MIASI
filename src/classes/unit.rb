@@ -2,7 +2,7 @@ require 'gosu'
 load '../src/classes/object.rb'
 
 class Unit < Object
-  attr_accessor :remove_unit, :speed, :max_unit_speed, :radius, :attack, :damage
+  attr_accessor :remove_unit, :speed, :max_unit_speed, :radius, :attack, :damage, :cost
   def initialize(x,y,window,player_id,type)
     super(x,y,window,player_id)
     @cost,@speed=0
@@ -145,7 +145,7 @@ class Unit < Object
       @anim_attack=load_sprites("../data/graphics/"+@player_id+"/Units/swordsman/attack")
       @anim_stand=load_sprites("../data/graphics/"+@player_id+"/Units/swordsman/stand")
       @recruit_swordsman.play
-      @cost=100
+      @cost=300
       @radius=25
       @frame_attack=3 if @player_id=="left"
       @frame_attack=2 if @player_id=="right"
@@ -175,7 +175,7 @@ class Unit < Object
       @anim_attack=load_sprites("../data/graphics/"+@player_id+"/Units/horseman/attack")
       @anim_stand=load_sprites("../data/graphics/"+@player_id+"/Units/horseman/stand")
       @recruit_horseman.play
-      @cost=100
+      @cost=500
       @radius=55
       @frame_attack=6 if @player_id=="left"
       @frame_attack=4 if @player_id=="right"
