@@ -4,7 +4,7 @@ require_relative '../classes/object.rb'
 require_relative '../classes/engine.rb'
 
 class Projectile < Object
-  attr_reader :ttl,:base_angle
+  attr_accessor :ttl,:base_angle, :angle, :scx, :scy
   def initialize (x,y,window,player_id)
 
     super
@@ -14,6 +14,10 @@ class Projectile < Object
     @in_air=true
     @energy=0.0
     @weight=1
+    @angle=0
+
+    @scx=0.5
+    @scy=0.5
   end
 def warp (angle)
   @base_angle=-angle
@@ -37,26 +41,28 @@ end
 
       unless @broken
         if @player_id=='left'
-          @colide=true and @vel_x1=@vel_x and @vel_y1=@vel_y if Gosu::distance(@x,@y, @game_window.right.walls[1].x,@game_window.right.walls[1].y)<380.0
+          @colide=true and @vel_x1=@vel_x and @vel_y1=@vel_y if Gosu::distance(@x,@y, @game_window.right.walls[1].x,@game_window.right.walls[2].y)<380.0
         else
-          @colide=true and @vel_y1=@vel_y and @vel_y1=@vel_y if Gosu::distance(@x,@y, @game_window.left.walls[1].x,@game_window.left.walls[1].y)<380.0
+          @colide=true and @vel_y1=@vel_y and @vel_x1=@vel_x if Gosu::distance(@x,@y, @game_window.left.walls[1].x,@game_window.left.walls[2].y)<380.0
         end
         @game_window.right.units.each { |unit| if Gosu::distance(@x,@y, unit.x,unit.y)<unit.radius  then  unit.hit(@energy) and return true end}
         @game_window.left.units.each { |unit| if Gosu::distance(@x,@y, unit.x,unit.y)<unit.radius  then  unit.hit(@energy) and return true end}
 
-        @game_window.birds.each { |e| if Gosu::distance(@x, @y, e.x,e.y)<35.0 then e.hit and e.arrow=self and return true end}
+        @game_window.birds.each { |e| if Gosu::distance(@x, @y, e.x,e.y)<30.0 then e.arrow=self and e.hit(@energy)  and return true end}
       end
 
       if @colide
         # @arrow_hit_wall.play
         if @player_id=='left'
-          dist = Gosu::distance(@x,@y, @game_window.right.walls[1].x,@game_window.right.walls[1].y)
+          dist = Gosu::distance(@x,@y, @game_window.right.walls[2].x,@game_window.right.walls[2].y)
+          ang=Gosu::angle(0,0,@vel_x1,@vel_y1)
         else
-          dist = Gosu::distance(@x,@y, @game_window.left.walls[1].x,@game_window.left.walls[1].y)
+          dist = Gosu::distance(@x,@y, @game_window.left.walls[2].x,@game_window.left.walls[2].y)
+          ang=-Gosu::angle(0,0,@vel_x1,@vel_y1)
         end
 
         # @vel_x*=dist/450.0
-        ang=Gosu::angle(0,0,@vel_x1,@vel_y1)
+        
         if ang<85
           @vel_y-=@g+330*5/dist
         end
@@ -69,6 +75,7 @@ end
       @vel_y-=@g
       @y-=@vel_y
       @energy=@vel*@vel*@weight/2
+      @angle=-Gosu::angle(0,0,@vel_x,@vel_y)+180
     else
 
 
@@ -81,6 +88,10 @@ end
   end
 
   def draw
-    @image.draw_rot(@x, @y, 6, -Gosu::angle(0,0,@vel_x,@vel_y)+180)
+    @image.draw_rot(@x, @y, 6, @angle,@scx,@scy)
+  end
+
+  def set_angle ang
+    @angle=ang
   end
 end

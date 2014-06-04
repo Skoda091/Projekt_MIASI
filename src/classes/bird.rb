@@ -22,6 +22,7 @@ class Bird < Object
        @died=false
        @dead_time=42
        @dead_counter=@dead_time
+       @angle=0
     end
 
   def move
@@ -31,7 +32,9 @@ class Bird < Object
       # abort(@vel_y.inspect)
       
       @vel_y+=0.18
-      @y+=@vel_y if @y<@game_window.engin.horizont_pos+50
+      
+      
+      @y+=@vel_y and @angle+= @rotate and @arrow.set_angle (@arrow.angle+@rotate)if @y<@game_window.engin.horizont_pos+30
       
 
     else
@@ -58,14 +61,16 @@ class Bird < Object
   end
 
   def draw
-    @image.draw_rot(@x, @y, 1, 0,0.5,0.5, -1*orientation) unless @image.nil?
+    @image.draw_rot(@x, @y, 1, @angle,0.5,0.5, -1*orientation) unless @image.nil?
     @arrow.x=@x
     @arrow.y=@y
     @arrow.draw unless @arrow.nil?
   end
 
-  def hit
+  def hit dmg
     unless @died
+      @energy=dmg
+      @arrow.nil? ? @rotate=0 : @arrow.scy=0 and @rotate=@energy/55 * (@arrow.player_id=='left' ? 1 : -1)
       @vel_x=0
       @vel_y=0
       @cooldown_time=@dead_time

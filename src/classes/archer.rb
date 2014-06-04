@@ -58,11 +58,13 @@ class Archer < Object
   end
 
   def angle_change (direction)
-    
+        angle_delta=2
+        @player_id=='left' ? delta=angle_delta : delta=angle_delta/2.0
+
         if direction==true
-          @angle+=3 if @angle+3<160
+          @angle+=delta if @angle+delta<160
         else
-          @angle-=3 if @angle-3>20
+          @angle-=delta if @angle-delta>20
         end
    
   end
