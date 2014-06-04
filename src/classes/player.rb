@@ -6,11 +6,12 @@ require_relative '../classes/unit.rb'
 require_relative '../classes/label.rb'
 
 class Player
-  attr_accessor :walls, :units, :corpse, :nexus
+  attr_accessor :walls, :units, :corpse, :nexus, :gold
   def initialize (window,orientation,engine)
     @game_window=window
     @orientation=orientation
     @engine=engine
+    @gold=1000
     @cooldown=100.0
     @count=false
     @cooldown_decay=0.995
@@ -18,9 +19,8 @@ class Player
     @walls=Array.new
     @units=Array.new
     @label=Label.new(@game_window,@orientation)
-    @label.draw
+    @label.draw(@gold)
     @corpse=Array.new
-    @gold=1000
 
 
     if @orientation=="left"
@@ -45,9 +45,9 @@ class Player
 
   def draw
     if @cooldown.between?(50,99) 
-      @label.deny
+      @label.deny(@gold)
     else
-      @label.draw
+      @label.draw(@gold)
     end
     @nexus.draw
     @walls.each { |x| x.draw}
