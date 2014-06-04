@@ -117,14 +117,14 @@ class Unit < Object
 
   end
 
-  def hit(damage)
+  def hit(damage,bow=false)
     unless @is_dead
       @hp-=damage
       unless @hp>0
         @hp=0
         die
       end
-      @arrow_hit.play
+      @arrow_hit.play if bow
       show_hp_bar 60,25
     end
   end
