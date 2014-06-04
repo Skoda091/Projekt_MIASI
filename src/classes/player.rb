@@ -26,6 +26,11 @@ class Player
     @swordsman_cost=300
     @horseman_cost=500
 
+    @cooldown_sample=0
+    @cooldown_sample_time=100
+    @cant_recruit=Gosu::Sample.new(@game_window, "../data/sounds/Taxes_rate6.wav")
+
+
     if @orientation=="left"
       for i in 0..2
 
@@ -47,6 +52,7 @@ class Player
 
 
   def draw
+    @cooldown_sample-=0.5
     if @cooldown.between?(50,99) 
       @label.deny(@gold)
     else
@@ -82,6 +88,10 @@ class Player
       @gold-=@tmp_cost
       return true
     else
+      if @cooldown_sample<=0
+        @cant_recruit.play
+        @cooldown_sample=@cooldown_sample_time
+      end
       return false
     end
   end
