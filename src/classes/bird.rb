@@ -5,7 +5,7 @@ class Bird < Object
   attr_accessor :arrow
   def initialize(window,player_id)
       orient=rand(2)
-       super(orient==0 ? 0 : window.res_x,rand(window.res_y-560)+100,window,orient==0 ? 'left' : 'right')
+       super(orient==0 ? 0 : window.res_x,rand(window.res_y-760)+350,window,orient==0 ? 'left' : 'right')
        
        @fly_anim = load_sprites("../data/graphics/Bird/fly")
        @die_anim = load_sprites("../data/graphics/Bird/die")
@@ -25,6 +25,7 @@ class Bird < Object
        @angle=0
        @rotate=0
        @energy=0
+       @ttl=2000
     end
 
   def move
@@ -37,13 +38,13 @@ class Bird < Object
       @rotate*=0.98
       
       @x+=@vel_x and @y+=@vel_y and @angle+= @rotate and @arrow.set_angle (@arrow.angle+@rotate)if @y<@game_window.engin.horizont_pos+30 and !@arrow.nil?
-      
+      @ttl-=1
 
     else
       r=(rand(21)-10)/50.0
       @vel_y+=r if (@vel_y+r).between?(-1.0,1.0)
       @x+=@vel_x*orientation
-      @y+=@vel_y if (@y+@vel_y).between?(90,500)
+      @y+=@vel_y if (@y+@vel_y).between?(350,550)
 
       @ttl=-0 unless @x.between?(-20,@game_window.res_x+21)
 
@@ -60,6 +61,10 @@ class Bird < Object
 
   def dead?
     @died
+  end
+
+  def remove?
+    true if @ttl<0
   end
 
   def draw

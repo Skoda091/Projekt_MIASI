@@ -19,7 +19,7 @@ class Unit < Object
     @attack_counter=25
     @frame_attack
     @remove_unit=false
-
+    @ttl=2000
     @buff=0
     init(@type)
     @change_frame=false
@@ -133,10 +133,17 @@ class Unit < Object
       show_hp_bar 60,25
     end
   end
+
   def corpse
     @z=1
     @image=@anim_die[@anim_die.size-1]
     # abort(@image.inspect)
+    @ttl-=1
+    
+  end
+
+  def remove?
+    @ttl<0 ? (return true) : (return false)
   end
 
   def init(type)

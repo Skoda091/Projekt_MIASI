@@ -33,13 +33,12 @@ class GameWindow < Gosu::Window
   end
 
   def update
-    @birds << Bird.new(self,"left") if rand(200)==0
-    @birds.each { |e|  @birds_corpse << e if e.dead? }
-    @birds_corpse.reject! {|e| e.dead?}
+    (@birds << Bird.new(self,"left") if rand(2**(@birds.count+1))<30) if Gosu::milliseconds%60==0
+    @birds.each { |e| e.dead? ? @birds_corpse << e : e.move}
+    @birds.reject! {|e| e.dead?}
 
-    @birds.each { |e| e.move}
     @birds_corpse.each { |e| e.move}
-
+    @birds_corpse.reject! {|e| e.remove?}
     @left.walls.reject! { |e| e.dead? }
     @right.walls.reject! { |e| e.dead? }
 
@@ -53,6 +52,9 @@ class GameWindow < Gosu::Window
 
     @left.corpse.each {|u| u.corpse}
     @right.corpse.each {|u| u.corpse}
+
+    @left.corpse.reject! {|u| u.remove?}
+    @right.corpse.reject! {|u| u.remove?}
 
     @left.collision
     @right.collision
