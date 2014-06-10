@@ -1,0 +1,1 @@
+#include "../GosuImpl/Inspection.cpp"

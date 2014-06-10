@@ -1,0 +1,58 @@
+Conject v0.1.8
+  * Fixed: bug in class finder when resolving module-namespaced objects
+  * Added: LICENSE
+
+Conject v0.1.7
+  * Added :class and :specialize object configurations
+  * Fixed a bug in the error handler that catches exceptions in object constructors
+
+Conject v0.1.6
+  * Object#contextual_name provides the string name of an object as it is keyed in its context
+
+Conject v0.1.5
+  * Using __send__ instead of send.  This avoids collisions with actual methods on target objects named "send"
+	* Added a more descriptive error handler when a constructor call fails in ObjectFactory
+
+Conject v0.1.4
+  * Removed Conject::BorroredInflector, moved copies of the underscore and camelize functions into Conject::Utilities
+
+Conject v0.1.3
+  * Changed the way Class.construct_with rewrites Class.new().  It is now safe to re-load the source code of a class that uses construct_with.
+
+Conject v0.1.2
+  * Aliasing objects via 'is', eg: context.configure_objects album: { is: "and_justice_for_all" }
+Conject v0.1.1
+  * canonical private accessors for module-scoped object
+
+Conject v0.1.0
+  * All objects now have a public accessor object_context
+  * provide_with_objects can be used like construct_with, except it sets up lazy use-time resolution of dependencies
+  * ObjectContext#put now raises if you accidentally re-register an object with the same name
+
+Conject v0.0.9
+  * Classes with module namespaces can now refer to collaborators in construct_with by omitting the full path corresponding to the object namespace
+
+Conject v0.0.8
+  * object_peers lets you declare within one object that if some subcontext should request an object, that object should be instantiated in THIS context
+
+Conject v0.0.7
+  (re-release due to release automation fail on my part)
+Conject v0.0.6
+  * .construct_with now suppost modules - lets you references module-scoped classes like Deeply::Nested::Bird as 'deeply/nested/bird'
+
+Conject v0.0.5
+  * ObjectContext.configure_objects 
+  * ... support :cache => false for objects, causing them to be non-singletons in context
+  * ... support :construct => lambda do |name, context| Something.new end
+
+Conject v0.0.4
+  * Bug fixes / support for dealing with inheritance, ie, objects that inherit
+  from Conjected objects etc
+
+Conject v0.0.3
+  * ObjectContext now caches self reference with key 'this_object_context'
+  allowing context injection into objects
+
+Conject v0.0.1
+  * Automatic Type 1 object construction
+  * Nested ObjectContexts
